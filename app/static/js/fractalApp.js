@@ -3,11 +3,11 @@ angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date'
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/fractal/static/views/floorview/floorview.html',
-        controller: 'floorviewController',
+        templateUrl: '/fractal/static/views/home/home.html',
+        // controller: 'floorviewController',
         resolve:{
-          resolvedAjaxItems: ['$q', '$rootScope', 'AuthService', 'floorviewer',
-          function ($q, $rootScope, AuthService, floorviewer) {
+          resolvedAjaxItems: ['$q', '$rootScope', 'AuthService',
+          function ($q, $rootScope, AuthService) {
             var deferred = $q.defer();
             AuthService.getUser()
             .then(
@@ -19,9 +19,8 @@ angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date'
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
                   $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
-                  floorviewer.get(function(data) {
-                    deferred.resolve(data);
-                  });
+                  
+                  deferred.resolve(data);
                 }
               }
             )

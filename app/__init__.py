@@ -42,9 +42,7 @@ from app.routes import index
 from app.routes import authentication
 from app.routes import users
 from app.routes import create_admin_entries
-from app.routes import floorviews
-from app.routes import machinepages
-from app.routes import localcommunications
+
 
 from app.functionss import access
 
