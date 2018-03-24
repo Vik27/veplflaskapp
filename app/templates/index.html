@@ -16,14 +16,18 @@
 	<link rel="stylesheet" type="text/css" href="static/css/rdash.min.css">
 	<!-- <link rel="stylesheet" type="text/css" href="static/css/main.min.css"> -->
 	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
     <!-- <script src="static/js/highcharts.js"></script> -->
     <!-- <script src="static/js/exporting.js"></script> -->
 </head>
 
-<body ng-controller="MasterCtrl">
-	<div class="row" style="max-height:75px;">
+<body>
+	<div class="row" ng-controller="MasterCtrl">
 		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-left:0;padding-right:0;background-color:grey;margin-bottom:0">
-			<nav class="navbar navbar-default navbar-inverse" style="margin-bottom:0px;border-radius:0;background-color:#1a1a1a">
+			<nav class="navbar navbar-fixed-top navbar-inverse" style="margin-bottom:0px;border-radius:0;background-color:#1a1a1a">
 				<div class="container-fluid">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header">
@@ -34,7 +38,7 @@
 							<span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="" style="padding-top:0;padding-left:40px">
-							<img src="/static/images/noviga_brand_logo.png" alt="noviga-icon-logo" width="150" height="50">
+							<img src="/fractal/static/noviga_brand_logo.png" alt="noviga-logo" width="160" height="50">
 						</a>
 					</div>
 
@@ -49,9 +53,6 @@
 							</li>
 							<li>
 								<a href="">Statistics</a>
-							</li>
-							<li>
-								<a href="">Dashboards</a>
 							</li>
 							<li>
 								<a href="">Settings</a>
@@ -72,69 +73,35 @@
 			</nav>
 		</div>
 	</div>
-	<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
-	    <!-- Sidebar -->
-	    <div id="sidebar-wrapper">
-	        <ul class="sidebar">
-		        <li class="sidebar-main">
-		            <a ng-click="toggleSidebar()">
-			            Dashboard
-			            <span class="menu-icon glyphicon glyphicon-transfer"></span>
-		            </a>
-		        </li>
-		        <li class="sidebar-title"><span>NAVIGATION</span></li>
-		        <li class="sidebar-list">
-			        <a href="#/">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
-		        </li>
-		        <li class="sidebar-list">
-			        <a href="#/createpcrn">Create PCRN <span class="menu-icon fa fa-table"></span></a>
-		        </li>
-		        <li class="sidebar-list">
-			        <a href="#/pcrnviewer"> PCRNs <span class="menu-icon fa fa-spinner"></span></a>
-		        </li>
-		        <li class="sidebar-list">
-			        <a href="#/processviewer/0">Processes <span class="menu-icon fa fa-wrench"></span></a>
-		        </li>
-	        </ul>
-	        <div class="sidebar-footer">
-		        <div class="col-xs-4">
-		            <a href="https://github.com/rdash/rdash-angular" target="_blank">
-			            Noviga
-		            </a>
-		        </div>
-		        <div class="col-xs-4">
-		          <a href="https://github.com/rdash/rdash-angular/blob/master/README.md" target="_blank">
-		            About
-		          </a>
-		        </div>
-		        <div class="col-xs-4">
-		          <a href="#">
-		            Support
-		          </a>
-		        </div>
-	        </div>
-	    </div>
-	    <!-- End Sidebar -->
+	<!-- Main Angular Content -->
+    <div ng-view ng-hide="layout.loading" style="padding-top: 50px"></div>
+    <div ng-show="layout.loading" style="text-align: center; padding-top: 50px">
+    	<img src="https://media.giphy.com/media/EhTIih4rcMoSI/source.gif" alt="Page Loading" height="300"/>
+    </div>
 
-	    <div id="content-wrapper">
-	        <div class="page-content">
+	<!-- <script type="text/javascript" src="static/lib/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="static/lib/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="static/lib/lodash/dist/lodash.js"></script>
+	<script type="text/javascript" src="static/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="static/lib/angular-resource/angular-resource.js"></script>
+	<script type="text/javascript" src="static/lib/angular-route/angular-route.js"></script>
+	<script type="text/javascript" src="static/lib/angular-cookies/angular-cookies.js"></script>
+	<script type="text/javascript" src="static/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script> -->
 
-		        <!-- Main Content -->
-		        <div ng-view></div>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-resource.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-cookies.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-sanitize.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-touch.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/highlight.min.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/pc035860/angular-highlightjs/master/angular-highlightjs.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.js"></script>
 
-	        </div><!-- End Page Content -->
-	    </div><!-- End Content Wrapper -->
-    </div><!-- End Page Wrapper -->
+	<script type="text/javascript" src="static/lib/angular-ui-date/src/date.js"></script>
 
-	<script src="static/lib/jquery/dist/jquery.js"></script>
-	<script src="static/lib/jquery-ui/jquery-ui.js"></script>
-	<script src="static/lib/lodash/dist/lodash.js"></script>
-	<script src="static/lib/angular/angular.js"></script>
-	<script src="static/lib/angular-resource/angular-resource.js"></script>
-	<script src="static/lib/angular-route/angular-route.js"></script>
-	<script src="static/lib/angular-cookies/angular-cookies.js"></script>
-	<script src="static/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-	<script src="static/lib/angular-ui-date/src/date.js"></script>
+	<script type="text/javascript" src="static/lib/angularjs-dropdown-multiselect/agnularjs-dropdown-multi.js"></script>
 
 	<script src="static/js/fractalApp.js"></script>
 
@@ -144,6 +111,14 @@
 	<!-- <script src="static/js/login/login-controller.js"></script> -->
 	<!-- <script src="static/js/login/login-router.js"></script> -->
 	<script src="static/js/login/login-service.js"></script>
+
+	<script src="static/js/floorview/floorview-controller.js"></script>
+	<script src="static/js/floorview/floorview-router.js"></script>
+	<script src="static/js/floorview/floorview-service.js"></script>
+
+	<script src="static/js/machinepage/machinepage-controller.js"></script>
+	<script src="static/js/machinepage/machinepage-router.js"></script>
+	<script src="static/js/machinepage/machinepage-service.js"></script>
 	
 </body>
 </html>

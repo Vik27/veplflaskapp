@@ -1,13 +1,13 @@
 // Declare app level module which depends on filters, and services
-angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date', 'ngCookies'])
-.config(['$routeProvider', function ($routeProvider) {
-  $routeProvider
-  .when('/', {
-    templateUrl: '/static/views/home/home.html',
-        // controller: 'createPcrnController',
+angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date', 'ngCookies', 'angularjs-dropdown-multiselect'])
+  .config(['$routeProvider', function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: '/fractal/static/views/floorview/floorview.html',
+        controller: 'floorviewController',
         resolve:{
-          resolvedAjaxItems: ['$q', '$rootScope', 'AuthService',
-          function ($q, $rootScope, AuthService) {
+          resolvedAjaxItems: ['$q', '$rootScope', 'AuthService', 'floorviewer',
+          function ($q, $rootScope, AuthService, floorviewer) {
             var deferred = $q.defer();
             AuthService.getUser()
             .then(
@@ -19,20 +19,24 @@ angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date'
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
                   $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
-                  deferred.resolve(data);
+                  floorviewer.get(function(data) {
+                    deferred.resolve(data);
+                  });
                 }
               }
             )
             .catch(
               function(data) {
                 $rootScope.loggedInUser = null;
-                return deferred.reject({authenticated: 'notLoggedIn'});
+                deferred.reject({authenticated: 'notLoggedIn'});
               }
             )
-          return deferred.promise;}]
+            return deferred.promise;
+          }]
         }
       }) 
-  .otherwise({redirectTo: '/'});
+
+    .otherwise({redirectTo: '/'});
 }]);
 
 
@@ -123,63 +127,50 @@ angular.module('fractalApp')
 
 
 angular.module('fractalApp')
-  .run(["$rootScope", "$window", "AuthService", function($rootScope, $window, AuthService) {
-    $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
-      if (eventObj.authenticated === "notLoggedIn") {
-        console.log("authenticated-notLoggedIn");
-        $window.location.href = '/login';
-      } else if (eventObj.authenticated === "unauthorized") {
-        console.log("unauthorized");
-        AuthService.logout()
-        .then(function(){
-          // $location.path("/login");
-          console.log('unauthorized-LoggedOut');
-        })
-      }
-    })
+  .run(["$rootScope", "$window", "AuthService", "$timeout", 
+    function($rootScope, $window, AuthService, $timeout) {
+      
+      $rootScope.layout = {};
+      $rootScope.layout.loading = false;
+      
+      $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
+        if (eventObj.authenticated === "notLoggedIn") {
+          console.log("authenticated-notLoggedIn");
+          $window.location.href = '/fractal/login';
+        } else if (eventObj.authenticated === "unauthorized") {
+          console.log("unauthorized");
+          AuthService.logout()
+          .then(function(){
+            // $location.path("/login");
+            console.log('unauthorized-LoggedOut');
+          })
+        }
+      });
+
+      $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
+        $timeout(function(){
+          $rootScope.layout.loading = false;
+        }, 200);
+      });
+
+      $rootScope.$on('$routeChangeStart', function () {
+        console.log('$routeChangeStart');
+        //show loading gif
+        $timeout(function(){
+          $rootScope.layout.loading = true;          
+        });
+      });
 }]);
 
 
 angular.module('fractalApp')
-    .controller('MasterCtrl', ['$scope', '$rootScope', '$cookieStore', '$window',
-      function ($scope, $rootScope, $cookieStore, $window) {
-    
-    /**
-     * Sidebar Toggle & Cookie Control
-     */
-    var mobileView = 992;
+    .controller('MasterCtrl', ['$scope', '$window',
+      function ($scope, $window) {
 
-    $scope.getWidth = function() {
-        return window.innerWidth;
-    };
-
-    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
-        if (newValue >= mobileView) {
-            if (angular.isDefined($cookieStore.get('toggle'))) {
-                $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
-            } else {
-                $scope.toggle = true;
-            }
-        } else {
-            $scope.toggle = false;
-        }
-
-    });
-
-    $scope.toggleSidebar = function() {
-        $scope.toggle = !$scope.toggle;
-        $cookieStore.put('toggle', $scope.toggle);
-    };
-
-    window.onresize = function() {
-        $scope.$apply();
-    };
-
-    $scope.logout = function () {
-      console.log('logging out now');
-      $window.location.href = '/noviga/logout';
-    };
-
+      $scope.logout = function () {
+        console.log('logging out now');
+        $window.location.href = '/fractal/noviga/logout';
+      };
 
 }]);
 

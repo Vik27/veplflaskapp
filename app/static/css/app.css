@@ -73,3 +73,21 @@ body {
 
 /*-------------------------------------------*/
 
+
+.titgreen {
+  color: #0f824e
+}
+.titred {
+  color: #9b2f0d;
+}
+.titgrey {
+  color: #686564;
+}
+#pointerTile {
+  cursor: pointer;
+}
+#pointerTile:hover {
+  padding: 2px;
+  background-color: #208202;
+}
+

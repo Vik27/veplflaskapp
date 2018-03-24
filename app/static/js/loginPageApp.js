@@ -19,7 +19,7 @@ angular.module('loginPageApp').factory('loginpage',
       // create a new instance of deferred
       var deferred = $q.defer();
       // send a post request to the server
-      $http.post('/noviga/loginpage', {username: username, password: password})
+      $http.post('/fractal/noviga/loginpage', {username: username, password: password})
       // handle success
       .success(function (data, status) {
         console.log(data);
@@ -47,6 +47,8 @@ angular.module('loginPageApp')
     .controller('loginCtrl', ['$scope', 'loginpage', '$http', '$window',
       function ($scope, loginpage, $http, $window) {
 
+      $scope.error = false;
+
       $scope.loginForm = {
         'username': '',
         'password': '',
@@ -54,12 +56,12 @@ angular.module('loginPageApp')
 
       $scope.login = function () {
         // initial values
-        $scope.error = false;
+        // $scope.error = false;
         $scope.disabled = true;
         loginpage.login($scope.loginForm.username, $scope.loginForm.password)
         .then(function (data) {
           console.log('successful login and redirected to the main fractal app');
-          $window.location.href = '/';
+          $window.location.href = '/fractal/';
         })
         .catch(function (error) {
           $scope.error = true;

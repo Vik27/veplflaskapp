@@ -8,7 +8,6 @@ angular.module('fractalApp').factory('AuthService',
 
     return ({
       isLoggedIn: isLoggedIn,
-      login: login,
       logout: logout,
       getUser: getUser,
       getStatus: getStatus,
@@ -16,38 +15,12 @@ angular.module('fractalApp').factory('AuthService',
     });
 
 
-    function login(username, password) {
-
-    // create a new instance of deferred
-    var deferred = $q.defer();
-
-    // send a post request to the server
-    $http.post('/noviga/login', {username: username, password: password})
-    // handle success
-    .success(function (data, status) {
-      if(status === 200 && data.result){
-        user = true;
-        deferred.resolve(data);
-      } else {
-        user = false;
-        deferred.reject();
-      }
-    })
-    // handle error
-    .error(function (data) {
-      user = false;
-      deferred.reject();
-    });
-
-    // return promise object
-    return deferred.promise;
-  };
 
   function logout() {
 
     var deferred = $q.defer();
 
-    $http.get('/noviga/logout')
+    $http.get('/fractal/noviga/logout')
     .success(function(data){
       if (data.result) {
         // console.log(data.result);
@@ -67,7 +40,7 @@ angular.module('fractalApp').factory('AuthService',
 
    var deferred = $q.defer();
 
-   $http.get('/noviga/getStatus')
+   $http.get('/fractal/noviga/getStatus')
    .success(function (data) {
     if (data.status) {
       user = true;
@@ -91,7 +64,7 @@ angular.module('fractalApp').factory('AuthService',
   function getUser() {
 
     var deferred = $q.defer();
-    $http.get('/noviga/getUser')
+    $http.get('/fractal/noviga/getUser')
     .success(
       function (response) {
         if(response !== 'null') {
