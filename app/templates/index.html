@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" ng-app="fractalApp">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Noviga Fractal - Your factory floor</title>
+	<link href="static/lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
+	<link href="static/lib/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+	<link href="static/css/app.css" rel="stylesheet">
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<script src="static/lib/jquery/dist/jquery.min.js"></script>
+	<script src="static/lib/bootstrap-css/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/rdash.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/main.min.css"> -->
+	
+    <!-- <script src="static/js/highcharts.js"></script> -->
+    <!-- <script src="static/js/exporting.js"></script> -->
+</head>
+
+<body ng-controller="MasterCtrl">
+	<div class="row" style="max-height:75px;">
+		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-left:0;padding-right:0;background-color:grey;margin-bottom:0">
+			<nav class="navbar navbar-default navbar-inverse" style="margin-bottom:0px;border-radius:0;background-color:#1a1a1a">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="" style="padding-top:0;padding-left:40px">
+							<img src="/static/images/noviga_brand_logo.png" alt="noviga-icon-logo" width="150" height="50">
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav" style="padding-left:32px">
+							<li class="active">
+								<a href="">Floor-View</a>
+							</li>
+							<li>
+								<a href="">Configure</a>
+							</li>
+							<li>
+								<a href="">Statistics</a>
+							</li>
+							<li>
+								<a href="">Dashboards</a>
+							</li>
+							<li>
+								<a href="">Settings</a>
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username}} <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="">Profile</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="" ng-click="logout()">Log Out</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</div>
+	</div>
+	<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+	    <!-- Sidebar -->
+	    <div id="sidebar-wrapper">
+	        <ul class="sidebar">
+		        <li class="sidebar-main">
+		            <a ng-click="toggleSidebar()">
+			            Dashboard
+			            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+		            </a>
+		        </li>
+		        <li class="sidebar-title"><span>NAVIGATION</span></li>
+		        <li class="sidebar-list">
+			        <a href="#/">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+		        </li>
+		        <li class="sidebar-list">
+			        <a href="#/createpcrn">Create PCRN <span class="menu-icon fa fa-table"></span></a>
+		        </li>
+		        <li class="sidebar-list">
+			        <a href="#/pcrnviewer"> PCRNs <span class="menu-icon fa fa-spinner"></span></a>
+		        </li>
+		        <li class="sidebar-list">
+			        <a href="#/processviewer/0">Processes <span class="menu-icon fa fa-wrench"></span></a>
+		        </li>
+	        </ul>
+	        <div class="sidebar-footer">
+		        <div class="col-xs-4">
+		            <a href="https://github.com/rdash/rdash-angular" target="_blank">
+			            Noviga
+		            </a>
+		        </div>
+		        <div class="col-xs-4">
+		          <a href="https://github.com/rdash/rdash-angular/blob/master/README.md" target="_blank">
+		            About
+		          </a>
+		        </div>
+		        <div class="col-xs-4">
+		          <a href="#">
+		            Support
+		          </a>
+		        </div>
+	        </div>
+	    </div>
+	    <!-- End Sidebar -->
+
+	    <div id="content-wrapper">
+	        <div class="page-content">
+
+		        <!-- Main Content -->
+		        <div ng-view></div>
+
+	        </div><!-- End Page Content -->
+	    </div><!-- End Content Wrapper -->
+    </div><!-- End Page Wrapper -->
+
+	<script src="static/lib/jquery/dist/jquery.js"></script>
+	<script src="static/lib/jquery-ui/jquery-ui.js"></script>
+	<script src="static/lib/lodash/dist/lodash.js"></script>
+	<script src="static/lib/angular/angular.js"></script>
+	<script src="static/lib/angular-resource/angular-resource.js"></script>
+	<script src="static/lib/angular-route/angular-route.js"></script>
+	<script src="static/lib/angular-cookies/angular-cookies.js"></script>
+	<script src="static/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="static/lib/angular-ui-date/src/date.js"></script>
+
+	<script src="static/js/fractalApp.js"></script>
+
+	<script src="static/js/home/home-controller.js"></script>
+
+
+	<!-- <script src="static/js/login/login-controller.js"></script> -->
+	<!-- <script src="static/js/login/login-router.js"></script> -->
+	<script src="static/js/login/login-service.js"></script>
+	
+</body>
+</html>
+
+
+
+
+

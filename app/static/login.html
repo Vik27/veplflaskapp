@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app="loginPageApp">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Noviga Fractal - Sign-In</title>
+	<link href="static/lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
+	<link href="static/lib/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+	<link href="static/css/app.css" rel="stylesheet">
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<script src="static/lib/jquery/dist/jquery.min.js"></script>
+	<script src="static/lib/bootstrap-css/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="static/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="static/css/rdash.min.css">
+</head>
+
+<body ng-controller="loginCtrl">
+	
+	<div class="col-sm-offset-1 col-lg-offset-1 col-md-offset-1 col-sm-10 col-xs-12 col-md-8 col-lg-6">
+		<h1 style="color: #4286f4;">Fractal - Sign into your factory floor</h1>
+		<div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+		<form class="form" ng-submit="login()">
+			<div class="form-group">
+				<label>Email</label>
+				<input type="text" class="form-control" name="email" ng-model="loginForm.username" required>
+			</div>
+			<div class="form-group">
+				<label>Password</label>
+					<input type="password" class="form-control" name="password" ng-model="loginForm.password" required>
+			</div>
+			<div>
+				<button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>
+			</div>
+		</form>
+	</div>
+
+	<script src="static/lib/jquery/dist/jquery.js"></script>
+	<script src="static/lib/jquery-ui/jquery-ui.js"></script>
+	<script src="static/lib/angular/angular.js"></script>
+	<script src="static/lib/angular-resource/angular-resource.js"></script>
+
+	<script src="static/js/loginPageApp.js"></script>
+
+</body>
