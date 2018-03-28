@@ -1,25 +1,19 @@
 from app import db
 
-class Cyclelog(db.Model):
+class Aliverow(db.Model):
 
-	__tablename__ = "cyclelog"
+	__tablename__ = "aliverow"
 
 	id = db.Column(db.Integer, primary_key = True)
 	
 	timestamp = db.Column(db.DateTime)
-
-	modelNo =db.Column(db.String(256))
-
-	status =db.Column(db.Integer)
-
+	
 
 	def to_dict(self):
 		return dict(
 			timestamp = self.timestamp,
-			modelNo =self.modelNo,
-			status =self.status,
 			id = self.id,
 		)
 
 	def __repr__(self):
-		return '<Cyclelog %r>' % (self.id)
+		return '<Aliverow %r>' % (self.id)

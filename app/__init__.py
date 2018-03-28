@@ -31,17 +31,19 @@ lm.login_view = 'login'
 from app.models import user
 from app.models import business
 from app.models import cyclelog
-from app.models import productionlog
-from app.models import downtimereason
-from app.models import failuremode
-from app.models import dtlog
-from app.models import currentdata
+# from app.models import productionlog
+# from app.models import downtimereason
+# from app.models import failuremode
+# from app.models import dtlog
+# from app.models import currentdata
+from app.models import aliverow
 
 
 from app.routes import index
 from app.routes import authentication
 from app.routes import users
 from app.routes import create_admin_entries
+from app.routes import localcommunications
 
 
 from app.functionss import access
