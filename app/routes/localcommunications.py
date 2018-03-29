@@ -12,12 +12,15 @@ def ichenmsgs():
 	# print 'ichenmsgs'
 
 	j = request.json
-	
+		msg={'modelNo':sett[0], 'timeStamp':sett[0].strftime('%Y-%b-%d %H:%M:%S'), 'okCount':okCount[0]-noOfRows-1, 'tpCount':tpCount[0],'type':'CycleData'}
+
 	if j['type'] == 'CycleData':
 		
 		cyclogEnt = cyclelog.Cyclelog(
-			timestamp = dd,
+			timestamp = datetime.datetime(j['timeStamp']),
 			modelNo = j['modelNo'],
+			okCount = j['okCount'],
+			tpCount = j['tpCount'],
 			
 			)
 		db.session.add(cyclogEnt)
