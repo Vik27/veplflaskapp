@@ -19,8 +19,8 @@ def ichenmsgs():
 		cyclogEnt = cyclelog.Cyclelog(
 			timestamp = datetime.datetime.strptime(j['timeStamp'], '%Y-%b-%d %H:%M:%S'),
 			modelNo = j['modelNo'],
-			okCount = j['okCount'],
-			tpCount = j['tpCount'],
+			okcount = j['okCount'],
+			tpcount = j['tpCount'],
 			
 			)
 		db.session.add(cyclogEnt)
