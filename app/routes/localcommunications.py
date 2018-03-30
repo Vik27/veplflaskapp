@@ -12,6 +12,7 @@ def ichenmsgs():
 	# print 'ichenmsgs'
 
 	j = request.json
+	print j
 
 	if j['type'] == 'CycleData':
 		
