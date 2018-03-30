@@ -16,7 +16,7 @@ def ichenmsgs():
 	if j['type'] == 'CycleData':
 		
 		cyclogEnt = cyclelog.Cyclelog(
-			timestamp = datetime.datetime(j['timeStamp']),
+			timestamp = datetime.datetime.strptime(j['timeStamp'], '%Y-%b-%d %H:%M:%S'),
 			modelNo = j['modelNo'],
 			okCount = j['okCount'],
 			tpCount = j['tpCount'],
