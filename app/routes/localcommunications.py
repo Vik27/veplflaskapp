@@ -20,7 +20,7 @@ def ichenmsgs():
 			timestamp = datetime.datetime.strptime(j['timeStamp'], '%Y-%b-%d %H:%M:%S'),
 			modelNo = j['modelNo'],
 			okcount = j['okCount'],
-			tpcount = j['tpCount'],
+			totalproduction = j['tpCount'],
 			
 			)
 		db.session.add(cyclogEnt)
