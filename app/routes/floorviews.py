@@ -12,7 +12,6 @@ from app.models import cyclelog, aliverow
 # from email.mime.text import MIMEText
 
 from threading import Thread
-import boto3
 import pprint
 
 import datetime as dt
