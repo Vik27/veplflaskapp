@@ -18,6 +18,11 @@ import datetime as dt
 # def conTime(timestamp):
 # 	return int(timestamp.strftime("%s"))*1000
 
+shift1=datetime.time(hour=7, minute=0, second=0)
+shift2=datetime.time(hour=15, minute=30, second=0)
+shift3=datetime.time(hour=23, minute=59, second=59)
+
+
 def conTime(timestamp):
 	return int((timestamp - datetime.datetime(1970,1,1)).total_seconds())*1000
 
@@ -25,8 +30,23 @@ def conTime(timestamp):
 @access.log_required1
 def get_mc_summary():
 
-	timey = datetime.datetime.now()
-	vv = timey - datetime.timedelta(days=4)
+	timey= datetime.datetime.now()
+
+	if timey.time()>shift1 and timey.time()<shift2:
+		vv=timey.replace(hour=7, minute=0, second=0)
+		shiftId=1
+	elif timey.time()>shift2 and timey.time()<shift3:
+		vv=timey.replace(hour=15, minute=30, second=0)
+		shiftId=2
+	else:
+		vv=timey.replace(hour=0, minute=0, second=0)
+		shiftId=3
+
+	print shiftId
+	vvstr=vv.strftime('%Y-%b-%d %H:%M:%S')
+	print vvstr
+
+
 	cycents=cyclelog.Cyclelog.query.filter(cyclelog.Cyclelog.timestamp.between(vv, timey)).order_by(cyclelog.Cyclelog.timestamp.asc()).all()
 
 
