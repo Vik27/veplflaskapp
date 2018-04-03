@@ -69,6 +69,7 @@ def get_mc_summary():
 	for i in range(len(cycents)-1):
 		if ((cycents[i+1].timestamp - cycents[i].timestamp).total_seconds()) > 60.:
 			# do something
+			ondata.append([conTime(cycents[i].timestamp), 1])
 			ondata.append([conTime(cycents[i].timestamp), 0])
 			offdata.append([conTime(cycents[i].timestamp), 0])
 			offdata.append([conTime(cycents[i].timestamp), 1])
