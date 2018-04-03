@@ -53,13 +53,11 @@ angular.module('fractalApp')
 
             series: [{
                 type: 'area',
-                name: 'USD to EUR',
                 data: $scope.ondata,
                 fillColor: 'green'
             },
             {
                 type: 'area',
-                name: 'same',
                 data: $scope.offdata,
                 fillColor: 'red'
             },
