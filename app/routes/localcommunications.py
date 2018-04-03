@@ -9,7 +9,6 @@ import datetime
 def ichenmsgs():
 
 	dd=datetime.datetime.now()
-	print 'ichenmsgs'
 
 	j = request.json
 

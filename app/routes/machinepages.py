@@ -43,8 +43,8 @@ def get_mc_summary():
 		shiftId=3
 
 	print shiftId
-	vvstr=vv.strftime('%Y-%b-%d %H:%M:%S')
-	print vvstr
+	vvstr=timey.strftime('%Y-%b-%d %H:%M:%S')
+	print 'timenow:'+ vvstr
 
 
 	cycents=cyclelog.Cyclelog.query.filter(cyclelog.Cyclelog.timestamp.between(vv, timey)).order_by(cyclelog.Cyclelog.timestamp.asc()).all()
