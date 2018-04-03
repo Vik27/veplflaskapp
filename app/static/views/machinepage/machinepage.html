@@ -9,54 +9,57 @@
       </div>
     </md-toolbar>
   </md-content>
-  <md-content layout-xs="column" layout="row">
-	  <div flex-xs="" flex-gt-xs="25" layout="column">
-	    <md-card>
-	      <md-card-title>
-	        <md-card-title-text>
-	          <span class="md-headline">OEE</span>
-	        </md-card-title-text>
-	      </md-card-title>
-	      <md-card-content layout="row" layout-align="center center">
-	        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#e74c3c" background-color="#ecf0f1"></ng-gauge>
-	      </md-card-content>
-	    </md-card>
-	  </div>
-	  <div flex-xs="" flex-gt-xs="25" layout="column">
-	    <md-card>
-	      <md-card-title>
-	        <md-card-title-text>
-	          <span class="md-headline">Availability</span>
-	        </md-card-title-text>
-	      </md-card-title>
-	      <md-card-content layout="row" layout-align="center center">
-	        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="yellow" background-color="#ecf0f1"></ng-gauge>
-	      </md-card-content>
-	    </md-card>
-	  </div>
-	  <div flex-xs="" flex-gt-xs="25" layout="column">
-	    <md-card>
-	      <md-card-title>
-	        <md-card-title-text>
-	          <span class="md-headline">Quality</span>
-	        </md-card-title-text>
-	      </md-card-title>
-	      <md-card-content layout="row" layout-align="center center">
-	        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#2ecc71" background-color="#ecf0f1"></ng-gauge>
-	      </md-card-content>
-	    </md-card>
-	  </div>
-	  <div flex-xs="" flex-gt-xs="25" layout="column">
-	    <md-card>
-	      <md-card-title>
-	        <md-card-title-text>
-	          <span class="md-headline">Performance</span>
-	        </md-card-title-text>
-	      </md-card-title>
-	      <md-card-content layout="row" layout-align="center center">
-	        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#2980b9" background-color="#ecf0f1"></ng-gauge>
-	      </md-card-content>
-	    </md-card>
-	  </div>
+  <md-content layout="column">
+  	<div flex id="container" style="height:300px;"></div>
+  	  <div layout-xs="column" layout="row">
+		  <div flex-xs="" flex-gt-xs="25" layout="column">
+		    <md-card>
+		      <md-card-title>
+		        <md-card-title-text>
+		          <span class="md-headline">OEE</span>
+		        </md-card-title-text>
+		      </md-card-title>
+		      <md-card-content layout="row" layout-align="center center">
+		        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#e74c3c" background-color="#ecf0f1"></ng-gauge>
+		      </md-card-content>
+		    </md-card>
+		  </div>
+		  <div flex-xs="" flex-gt-xs="25" layout="column">
+		    <md-card>
+		      <md-card-title>
+		        <md-card-title-text>
+		          <span class="md-headline">Availability</span>
+		        </md-card-title-text>
+		      </md-card-title>
+		      <md-card-content layout="row" layout-align="center center">
+		        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="yellow" background-color="#ecf0f1"></ng-gauge>
+		      </md-card-content>
+		    </md-card>
+		  </div>
+		  <div flex-xs="" flex-gt-xs="25" layout="column">
+		    <md-card>
+		      <md-card-title>
+		        <md-card-title-text>
+		          <span class="md-headline">Quality</span>
+		        </md-card-title-text>
+		      </md-card-title>
+		      <md-card-content layout="row" layout-align="center center">
+		        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#2ecc71" background-color="#ecf0f1"></ng-gauge>
+		      </md-card-content>
+		    </md-card>
+		  </div>
+		  <div flex-xs="" flex-gt-xs="25" layout="column">
+		    <md-card>
+		      <md-card-title>
+		        <md-card-title-text>
+		          <span class="md-headline">Performance</span>
+		        </md-card-title-text>
+		      </md-card-title>
+		      <md-card-content layout="row" layout-align="center center">
+		        <ng-gauge size="200" type="arch" thick="7" value="68.2" cap="round" label="Normal" append="%" foreground-color="#2980b9" background-color="#ecf0f1"></ng-gauge>
+		      </md-card-content>
+		    </md-card>
+		  </div>
+		</div>
 	</md-content>
 </div>

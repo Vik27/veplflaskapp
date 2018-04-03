@@ -7,8 +7,8 @@ angular.module('fractalApp')
         templateUrl: '/static/views/machinepage/machinepage.html',
         controller: 'machinepageController',
         resolve:{
-          resolvedAjaxItems: ['$q', '$rootScope', '$route' ,'machinepager', 'AuthService',
-          function ($q, $rootScope, $route, machinepager, AuthService) {
+          resolvedAjaxItems: ['$q', '$rootScope', '$route' ,'machinesummary', 'AuthService',
+          function ($q, $rootScope, $route, machinesummary, AuthService) {
             var deferred = $q.defer();
             AuthService.getUser()
             .then(
@@ -19,10 +19,10 @@ angular.module('fractalApp')
                   $rootScope.loggedInUser = null;
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
-                  $rootScope.loggedInUser = {id:data.data.id, name: data.data.username, role: data.data.role, businessId: data.data.businessId};
-                  // machinepager.get(function(data) {
+                  $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
+                  machinesummary.get(function(data) {
                     deferred.resolve(data);
-                  // });
+                  });
                 }
               }
             )

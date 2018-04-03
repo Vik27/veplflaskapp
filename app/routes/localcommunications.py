@@ -5,11 +5,10 @@ from app.functionss import access
 from app.models import cyclelog, aliverow
 import datetime
 
-@app.route('/boschmsgs', methods = ['POST'])
+@app.route('/fractal/boschmsgs', methods = ['POST'])
 def ichenmsgs():
 
 	dd=datetime.datetime.now()
-	print 'ichenmsgs'
 
 	j = request.json
 
