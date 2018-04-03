@@ -20,18 +20,18 @@ angular.module('fractalApp').factory('AuthService',
 
     var deferred = $q.defer();
 
-    $http.get('/fractal/noviga/logout')
-    .success(function(data){
+    $http.get('/noviga/logout')
+    .then(function(data){
       if (data.result) {
         // console.log(data.result);
         user = false;
         deferred.resolve();
       }
-    })
-    .error(function(){
+    },
+    function(){
       user = false;
       deferred.reject();
-    })
+    });
 
     return deferred.promise;
   };
@@ -40,8 +40,8 @@ angular.module('fractalApp').factory('AuthService',
 
    var deferred = $q.defer();
 
-   $http.get('/fractal/noviga/getStatus')
-   .success(function (data) {
+   $http.get('/noviga/getStatus')
+   .then(function (data) {
     if (data.status) {
       user = true;
       // console.log('world')
@@ -51,8 +51,8 @@ angular.module('fractalApp').factory('AuthService',
       // console.log('round')
       deferred.resolve();
     }
-   })
-   .error(function (data) {
+   },
+   function (data) {
     user = false;
     deferred.reject();
    })
@@ -64,8 +64,8 @@ angular.module('fractalApp').factory('AuthService',
   function getUser() {
 
     var deferred = $q.defer();
-    $http.get('/fractal/noviga/getUser')
-    .success(
+    $http.get('/noviga/getUser')
+    .then(
       function (response) {
         if(response !== 'null') {
           user = true;
@@ -74,9 +74,7 @@ angular.module('fractalApp').factory('AuthService',
           user = false;
           deferred.resolve(response);
         }
-      }
-    )
-    .error(
+      },
       function (errResponse) {
         // console.error('Error while fetching current user');
         deferred.reject(errResponse);

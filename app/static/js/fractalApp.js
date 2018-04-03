@@ -1,10 +1,13 @@
 // Declare app level module which depends on filters, and services
-angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date', 'ngCookies', 'angularjs-dropdown-multiselect'])
-  .config(['$routeProvider', function ($routeProvider) {
+angular.module('fractalApp', 
+  ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date', 'ngCookies',
+  'angularjs-dropdown-multiselect', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
     $routeProvider
       .when('/', {
-        templateUrl: '/fractal/static/views/home/home.html',
-        // controller: 'floorviewController',
+        templateUrl: '/static/views/home/home.html',
+        controller: 'homeController',
         resolve:{
           resolvedAjaxItems: ['$q', '$rootScope', 'AuthService',
           function ($q, $rootScope, AuthService) {
@@ -18,7 +21,7 @@ angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date'
                   $rootScope.loggedInUser = null;
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
-                  $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
+                  $rootScope.loggedInUser = {id:data.data.id, name: data.data.username, role: data.data.role, businessId: data.data.businessId};
                   
                   deferred.resolve(data);
                 }
@@ -38,6 +41,10 @@ angular.module('fractalApp', ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date'
     .otherwise({redirectTo: '/'});
 }]);
 
+// angular.module('fractalApp')
+//   .config(['$locationProvider', function ($locationProvider) {
+//     $locationProvider.hashPrefix('');
+//   }]);
 
 angular.module('fractalApp')
   .directive('rdWidget', function () {
@@ -133,14 +140,16 @@ angular.module('fractalApp')
       $rootScope.layout.loading = false;
       
       $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
+        console.log('$routeChangeError');
+        console.log(eventObj);
         if (eventObj.authenticated === "notLoggedIn") {
           console.log("authenticated-notLoggedIn");
-          $window.location.href = '/fractal/login';
+          $window.location.href = '/login';
         } else if (eventObj.authenticated === "unauthorized") {
           console.log("unauthorized");
           AuthService.logout()
           .then(function(){
-            // $location.path("/login");
+            $window.location.href = "/login";
             console.log('unauthorized-LoggedOut');
           })
         }
@@ -168,7 +177,7 @@ angular.module('fractalApp')
 
       $scope.logout = function () {
         console.log('logging out now');
-        $window.location.href = '/fractal/noviga/logout';
+        $window.location.href = '/noviga/logout';
       };
 
 }]);

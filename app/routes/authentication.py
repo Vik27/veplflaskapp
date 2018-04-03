@@ -6,9 +6,25 @@ import json
 from app.functionss import access
 from flask.ext.login import login_user, logout_user, current_user
 
+class BadRequestError(ValueError):
+    pass
+
+
+def bad_request(message):
+    response = jsonify({'message': message})
+    response.status_code = 400
+    return response
+
+
+@app.errorhandler(BadRequestError)
+def bad_request_handler(error):
+    return bad_request(error.message)
+
+
 @lm.user_loader
 def user_loader(userid):
     return User.query.get(int(userid))
+
 
 @app.before_request
 def before_request():

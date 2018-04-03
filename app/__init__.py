@@ -12,12 +12,12 @@ import json
 from flask_mail import Mail
 from flask_mail import Message
 
-from flask_cors import CORS
+# from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
-CORS(app)
+# CORS(app)
 mail = Mail(app)
 
 bcrypt = Bcrypt(app)

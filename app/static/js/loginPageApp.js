@@ -1,5 +1,5 @@
 // Declare app level module which depends on filters, and services
-angular.module('loginPageApp', ['ngResource']);
+angular.module('loginPageApp', []);
 
 angular.module('loginPageApp').factory('loginpage',
   ['$q', '$timeout', '$http', '$rootScope',
@@ -19,21 +19,21 @@ angular.module('loginPageApp').factory('loginpage',
       // create a new instance of deferred
       var deferred = $q.defer();
       // send a post request to the server
-      $http.post('/fractal/noviga/loginpage', {username: username, password: password})
+      $http.post('/noviga/loginpage', {username: username, password: password})
       // handle success
-      .success(function (data, status) {
+      .then(function (data) {
         console.log(data);
-        console.log(status);
-        if(status === 200 && data.result){
+        // console.log(status);
+        if(data.status === 200 && data.data.result){
           user = true;
           deferred.resolve(data);
         } else {
           user = false;
           deferred.reject();
         }
-      })
+      },
       // handle error
-      .error(function (data) {
+      function (data) {
         user = false;
         deferred.reject();
       });
@@ -48,6 +48,7 @@ angular.module('loginPageApp')
       function ($scope, loginpage, $http, $window) {
 
       $scope.error = false;
+      $scope.errorMessage = null;
 
       $scope.loginForm = {
         'username': '',
@@ -61,11 +62,11 @@ angular.module('loginPageApp')
         loginpage.login($scope.loginForm.username, $scope.loginForm.password)
         .then(function (data) {
           console.log('successful login and redirected to the main fractal app');
-          $window.location.href = '/fractal/';
+          $window.location.href = '/';
         })
         .catch(function (error) {
           $scope.error = true;
-          console.log(error);
+          console.log('error');
           $scope.errorMessage = "Invalid username and/or password";
           $scope.disabled = false;
           $scope.loginForm = {};
