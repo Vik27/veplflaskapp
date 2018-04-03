@@ -30,7 +30,8 @@ def conTime(timestamp):
 @access.log_required1
 def get_mc_summary():
 
-	timey= datetime.datetime.now()
+	timey= datetime.datetime.now()+datetime.timedelta(hours=5, minutes=30)
+
 
 	if timey.time()>shift1 and timey.time()<shift2:
 		vv=timey.replace(hour=7, minute=0, second=0)
