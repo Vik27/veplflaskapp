@@ -5,7 +5,7 @@
       <div class="md-toolbar-tools">
         <md-truncate>Bottom 5 Performers</md-truncate>
         <span flex=""></span>
-        <md-button class="md-icon-button md-accent" aria-label="Week">
+        <md-button class="md-fab md-mini md-primary" aria-label="Week">
           <md-tooltip md-direction="bottom">Previous Week</md-tooltip>
           <img class="png-icon" src="/static/week-sm.png">
         </md-button>
@@ -21,51 +21,38 @@
 
     <md-tabs md-dynamic-height md-border-bottom>
       <md-tab label="OEE">
-        <md-content layout-xs="column" layout="row">
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Icon action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                  <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Settings">
-                  <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Share">
-                  <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                </md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Vertical action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="column" layout-align="start">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-        </md-content>
+      	<div class="row" style="padding-top: 10px">
+      	<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="machine in machines">
+					<div id="pointerTile" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}" style="padding: 1px" ng-click="goToMachine(machine.id)">
+						<rd-widget>
+							<rd-widget-body>
+								<div class="widget-icon pull-left" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}">
+									<i ng-class="{'fa fa-gear fa-spin': machine.status === 'on', 'fa fa-power-off': machine.status === 'off', 'fa fa-ban': machine.status === 'disconnected'}"></i>
+								</div>
+								<div class="title" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
+									{{machine.machineNo}}: {{machine.machineName}}
+								</div>
+								<div class="comment" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
+									{{machine.make}}
+								</div>
+								<hr/>
+								<div class="row comment" style="font-size: 20px; margin-top: 10px">
+									<span class="pull-left" ng-class="{'titgreen': machine.currentOEE > machine.previousOEE, 'titred': machine.currentOEE <= machine.previousOEE}">
+										Current: <b>{{machine.currentOEE}} %</b>&nbsp;
+										<i class="fa fa-chevron-circle-up"></i>
+									</span>
+									<span class="pull-right">
+										Prev: <b>{{machine.previousOEE}} %</b>
+									</span>
+								</div>
+								<!-- <div class="comment">
+									Achieved: {{machine.prodCount}}
+								</div> -->
+							</rd-widget-body>
+						</rd-widget>
+					</div>
+				</div>
+			</div>
       </md-tab>
       <md-tab label="Availability">
         <md-content layout-xs="column" layout="row">
