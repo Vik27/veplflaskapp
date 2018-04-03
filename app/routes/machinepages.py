@@ -63,7 +63,7 @@ def get_mc_summary():
 	yy = conTime(cycents[0].timestamp)
 	onoffdata=[ [xx, 0], [yy, 0] ]
 	ondata=[ [xx, 0], [yy, 0] ]
-	offdata=[ [xx, 0], [yy, 0] ]
+	offdata=[ [xx, 0],[xx, 1], [yy, 1], [yy, 0] ]
 
 
 	for i in range(len(cycents)-1):
