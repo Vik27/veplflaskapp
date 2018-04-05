@@ -64,11 +64,12 @@ def get_mc_summary():
 	onoffdata=[ [xx, 0], [yy, 0] ]
 	ondata=[ [xx, 0], [yy, 0] ]
 	offdata=[ [xx, 0],[xx, 1], [yy, 1], [yy, 0] ]
-
+	downtime=yy-xx
 
 	for i in range(len(cycents)-1):
 		if ((cycents[i+1].timestamp - cycents[i].timestamp).total_seconds()) > 60.:
 			# do something
+			downtime=downtime+((cycents[i+1].timestamp-cycents[i].timestamp).total_seconds()*1000)
 			ondata.append([conTime(cycents[i].timestamp), 1])
 			ondata.append([conTime(cycents[i].timestamp), 0])
 			offdata.append([conTime(cycents[i].timestamp), 0])
@@ -82,4 +83,4 @@ def get_mc_summary():
 			ondata.append([conTime(cycents[i].timestamp), 1])
 
 
-	return jsonify({'ondata': ondata, 'offdata': offdata}), 200
+	return jsonify({'ondata': ondata, 'offdata': offdata, 'downtime':downtime,'okcount':cycents[-1].okcount,'totalCount':cycents[-1].totalproduction}), 200

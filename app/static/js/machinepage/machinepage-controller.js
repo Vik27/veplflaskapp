@@ -17,7 +17,9 @@ angular.module('fractalApp')
                 enabled: false
             },
             chart: {
-                zoomType: 'x'
+                zoomType: 'x',
+		panning: true,
+		panKey: 'shift'
             },
             title: {
                 text: ''
@@ -60,14 +62,14 @@ angular.module('fractalApp')
                 name: 'ON',
                 data: $scope.ondata,
                 fillColor: '#8BC34A',
-                line: {color: '#8BC34A'}
+                color: '#8BC34A'
             },
             {
                 type: 'area',
                 name: 'OFF',
                 data: $scope.offdata,
                 fillColor: '#EF5350',
-                line: {color: '#EF5350'}
+                color: '#EF5350'
             },
             ]
         });
@@ -104,13 +106,13 @@ angular.module('fractalApp')
 			        colorByPoint: true,
 			        data: [{
 			            name: 'Availability',
-			            y: 60,
+			            y: 348,
 			        }, {
 			            name: 'Unplanned Downtime',
-			            y: 30
+			            y: 102,
 			        }, {
 			            name: 'Planned Downtime',
-			            y: 10
+			            y: 60,
 			        }]
 			    }]
 			});
