@@ -10,6 +10,20 @@ angular.module('fractalApp')
 		
 		$scope.offdata=resolvedAjaxItems.offdata;
 		$scope.ondata=resolvedAjaxItems.ondata;
+        $scope.okcount=resolvedAjaxItems.okcount;
+        $scope.totalCount=resolvedAjaxItems.totalCount;
+        $scope.oee=$filter('number')(resolvedAjaxItems.oee,1);
+        $scope.availability=$filter('number')(resolvedAjaxItems.availability,1);
+        $scope.performance=$filter('number')(resolvedAjaxItems.performance,1);
+        $scope.quality=$filter('number')(resolvedAjaxItems.quality,1);
+        $scope.totalOKTime=resolvedAjaxItems.totalOKTime;
+        $scope.totalproductionTime=resolvedAjaxItems.totalproductionTime;
+        $scope.stdProductionRate=resolvedAjaxItems.stdProductionRate;
+        $scope.actualProductionRate=resolvedAjaxItems.actualProductionRate;
+        $scope.downtime=$filter('number')(resolvedAjaxItems.downtime,0);
+        $scope.unplannedDowntime=resolvedAjaxItems.unplannedDowntime;
+        $scope.plannedDowntime=resolvedAjaxItems.plannedDowntime;
+
 
 
 		Highcharts.chart('container', {
@@ -17,7 +31,9 @@ angular.module('fractalApp')
                 enabled: false
             },
             chart: {
-                zoomType: 'x'
+                zoomType: 'x',
+		panning: true,
+		panKey: 'shift'
             },
             title: {
                 text: ''
@@ -103,14 +119,14 @@ angular.module('fractalApp')
 			        name: 'Brands',
 			        colorByPoint: true,
 			        data: [{
-			            name: 'Availability',
-			            y: 60,
+			            name: 'Machine On Time',
+			            y: $scope.totalOKTime,
 			        }, {
-			            name: 'Unplanned Downtime',
-			            y: 30
+			            name: 'Unplanned',
+			            y: $scope.unplannedDowntime,
 			        }, {
-			            name: 'Planned Downtime',
-			            y: 10
+			            name: 'Planned',
+			            y: $scope.plannedDowntime,
 			        }]
 			    }]
 			});
