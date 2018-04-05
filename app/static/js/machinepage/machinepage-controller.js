@@ -60,14 +60,14 @@ angular.module('fractalApp')
                 name: 'ON',
                 data: $scope.ondata,
                 fillColor: '#8BC34A',
-                line: {color: '#8BC34A'}
+                color: '#8BC34A'
             },
             {
                 type: 'area',
                 name: 'OFF',
                 data: $scope.offdata,
                 fillColor: '#EF5350',
-                line: {color: '#EF5350'}
+                color: '#EF5350'
             },
             ]
         });
