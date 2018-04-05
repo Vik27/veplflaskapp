@@ -19,8 +19,37 @@ import datetime as dt
 # 	return int(timestamp.strftime("%s"))*1000
 
 shift1=datetime.time(hour=7, minute=0, second=0)
+
 shift2=datetime.time(hour=15, minute=30, second=0)
 shift3=datetime.time(hour=23, minute=59, second=59)
+
+
+def getcurrentPlannedDowntime(shiftId, timeNow):
+
+	plannedDowntime=[[[timeNow.replace(hour=8, minute=0, second=0),timeNow.replace(hour=8, minute=10, second=0)],
+				[timeNow.replace(hour=11, minute=0, second=0),timeNow.replace(hour=11, minute=30, second=0)],
+				[timeNow.replace(hour=13, minute=0, second=0),timeNow.replace(hour=13, minute=10, second=0)]],
+				[[timeNow.replace(hour=17, minute=0, second=0),timeNow.replace(hour=17, minute=10, second=0)],
+				[timeNow.replace(hour=19, minute=30, second=0),timeNow.replace(hour=20, minute=0, second=0)],
+				[timeNow.replace(hour=22, minute=0, second=0),timeNow.replace(hour=22, minute=10, second=0)]],
+				[[timeNow.replace(hour=1, minute=0, second=0),timeNow.replace(hour=1, minute=10, second=0)],
+				[timeNow.replace(hour=4, minute=0, second=0),timeNow.replace(hour=4, minute=10, second=0)]]]
+				
+	timePD=0
+
+	for x in plannedDowntime[shiftId-1]:
+		if timeNow>x[1]:
+			# print (x[1]-x[0])
+
+			timePD += (x[1]-x[0]).total_seconds()
+
+		elif timeNow>x[0] and timeNow<x[1]:
+			timePD += (timeNow-x[0]).total_seconds()
+		else:
+			pass
+
+	return timePD
+
 
 
 def conTime(timestamp):
@@ -36,6 +65,7 @@ def get_mc_summary():
 	if timey.time()>shift1 and timey.time()<shift2:
 		vv=timey.replace(hour=7, minute=0, second=0)
 		shiftId=1
+
 	elif timey.time()>shift2 and timey.time()<shift3:
 		vv=timey.replace(hour=15, minute=30, second=0)
 		shiftId=2
@@ -47,6 +77,7 @@ def get_mc_summary():
 	vvstr=timey.strftime('%Y-%b-%d %H:%M:%S')
 	print 'timenow:'+ vvstr
 
+	currentPlannedDowntime=getcurrentPlannedDowntime(shiftId, timey)
 
 	cycents=cyclelog.Cyclelog.query.filter(cyclelog.Cyclelog.timestamp.between(vv, timey)).order_by(cyclelog.Cyclelog.timestamp.asc()).all()
 
@@ -83,4 +114,28 @@ def get_mc_summary():
 			ondata.append([conTime(cycents[i].timestamp), 1])
 
 
-	return jsonify({'ondata': ondata, 'offdata': offdata, 'downtime':downtime,'okcount':cycents[-1].okcount,'totalCount':cycents[-1].totalproduction}), 200
+	totalRed=downtime/1000.0
+	calenderTime=(timey-vv).total_seconds()
+
+	totalproductionTime=calenderTime-currentPlannedDowntime
+	totalOKTime=calenderTime-totalRed
+
+	availability=(totalOKTime*1.0/totalproductionTime)
+
+	stdProductionRate=(1400.0/27600)
+	actualProductionRate=(cycents[-1].totalproduction*1.0/totalOKTime)
+	performance=(actualProductionRate/stdProductionRate)
+	
+	quality=(cycents[-1].okcount*1.0/cycents[-1].totalproduction)
+
+	oee=availability*performance*quality
+
+	downtime=(totalRed-currentPlannedDowntime)/60.0
+
+	return jsonify({'ondata': ondata, 'offdata': offdata, 'downtime':downtime,'okcount':cycents[-1].okcount,
+					'totalCount':cycents[-1].totalproduction, 'oee':oee*100,
+					'availability': availability*100, 'performance':performance*100, 'quality':quality*100,
+					'totalOKTime':totalOKTime, 'totalproductionTime':totalproductionTime,
+					'stdProductionRate':stdProductionRate, 'actualProductionRate':actualProductionRate,
+					'unplannedDowntime':downtime/1000-currentPlannedDowntime,'plannedDowntime':currentPlannedDowntime,
+					}), 200
