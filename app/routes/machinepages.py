@@ -137,5 +137,5 @@ def get_mc_summary():
 					'availability': availability*100, 'performance':performance*100, 'quality':quality*100,
 					'totalOKTime':totalOKTime, 'totalproductionTime':totalproductionTime,
 					'stdProductionRate':stdProductionRate, 'actualProductionRate':actualProductionRate,
-					'unplannedDowntime':downtime/1000-currentPlannedDowntime,'plannedDowntime':currentPlannedDowntime,
+					'unplannedDowntime':downtime,'plannedDowntime':currentPlannedDowntime,
 					}), 200
