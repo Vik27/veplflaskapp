@@ -73,7 +73,7 @@ angular.module('fractalApp')
             },
             yAxis: {
                 title: {
-                    text: 'Production'
+                    text: ''
                 },
                 labels: {
                     enabled: false
