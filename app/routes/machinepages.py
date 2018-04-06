@@ -59,7 +59,9 @@ def conTime(timestamp):
 @access.log_required1
 def get_mc_summary():
 
-	timey= datetime.datetime.now()+datetime.timedelta(hours=5, minutes=30)
+	timey= datetime.datetime.now()
+	timey= datetime.datetime.now()-datetime.timedelta(hours=20)
+	# timey= datetime.datetime.now()+datetime.timedelta(hours=5, minutes=30)
 
 
 	if timey.time()>shift1 and timey.time()<shift2:

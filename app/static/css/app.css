@@ -107,6 +107,29 @@ display: none !important;
     pointer-events: none;
 }
 
+.my-container md-select-menu {
+  /*z-index: 300 !important;*/
+  min-height: 300px;
+  /*transform-origin: initial;*/
+}
+
+.my-container md-select-menu md-content{
+  /*z-index: 300 !important;*/
+  min-height: 300px;
+  /*transform: initial !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;*/
+}
+
+/*body {
+    position: initial !important;
+    top: initial !important;
+    overflow: initial !important;
+}
+html {
+    overflow: initial !important;
+}*/
+
 
 
 /*

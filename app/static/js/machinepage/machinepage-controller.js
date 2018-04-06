@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fractalApp')
-	.controller('machinepageController', ['$filter', '$scope', '$rootScope', '$modal', '$location', '$cookieStore', 'resolvedAjaxItems', 'machinepagerTemp', 'machinepagerCond', 'machinepagerTimer',
-		function ($filter, $scope, $rootScope, $modal, $location, $cookieStore, resolvedAjaxItems, machinepagerTemp, machinepagerCond, machinepagerTimer) {
+	.controller('machinepageController', ['$filter', '$window', '$scope', '$rootScope', '$modal', '$location', '$cookieStore', 'resolvedAjaxItems', 'machinepagerTemp', 'machinepagerCond', 'machinepagerTimer',
+		function ($filter, $window, $scope, $rootScope, $modal, $location, $cookieStore, resolvedAjaxItems, machinepagerTemp, machinepagerCond, machinepagerTimer) {
 
 
 		console.log(resolvedAjaxItems);
@@ -24,6 +24,29 @@ angular.module('fractalApp')
         $scope.unplannedDowntime=resolvedAjaxItems.unplannedDowntime;
         $scope.plannedDowntime=resolvedAjaxItems.plannedDowntime;
 
+        $scope.hght = (window.innerHeight-120) + 'px';
+        // $scope.wdth = window.innerWidth + 'px';
+        // console.log($scope.wdth);
+        // console.log($scope.hght);
+
+        $scope.durations = [
+        {'id': 1, 'name': 'Shift'},
+        {'id': 2, 'name': 'Day'},
+        {'id': 3, 'name': 'Week'},
+        {'id': 4, 'name': 'Month'},
+        {'id': 5, 'name': 'Quarter'},
+        {'id': 6, 'name': 'Year'}];
+
+        $scope.filt = {'duration': 1};
+
+        $scope.selclicked = function(){
+        	console.log('klkolkiolkoolko');
+    var containerTop = $(".my-md-select").offset().top + "px";
+    setTimeout(function(){
+        $(".my-container").css({'top':containerTop});
+    }, 50);
+
+};
 
 
 		Highcharts.chart('container', {

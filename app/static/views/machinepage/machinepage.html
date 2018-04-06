@@ -1,71 +1,112 @@
-
-<div ng-cloak="" class="toolbardemoBasicUsage">
-  <md-content>
-    <md-toolbar>
-      <div class="md-toolbar-tools" layout="row" layout-xs="column">
-        <md-truncate>Machine 1: 2WSM-Auto</md-truncate>
-        <span flex=""></span>
-        <span>VEPL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</span>
-      </div>
-    </md-toolbar>
-  </md-content>
-  <md-content layout="column">
-  	<div flex id="container" style="height:230px;" class="md-padding"></div>
-	<div layout-xs="column" layout="row" class="md-padding">
-	<div flex-xs flex-gt-xs="33" class="alert alert-info">Total: {{totalCount}}</div>
-	<div flex-xs flex-gt-xs="33" class="alert alert-success" >OK: {{okcount}}</div>
-	<div flex-xs flex-gt-xs="33" class="alert alert-danger">Unplanned Downtime: {{downtime}} min</div>
-	</div>
-  	  <div layout-xs="column" layout="row" class="md-padding">
-		  <div flex-xs="" flex-gt-xs="25" layout="column">
-		    <md-card>
-		      <md-card-title>
-		        <md-card-title-text>
-		          <span class="md-headline">OEE</span>
-		        </md-card-title-text>
-		      </md-card-title>
-		      <md-card-content layout="row" layout-align="center center">
-		        <ng-gauge size="200" type="arch" thick="7" value="oee" cap="round" label="Normal" append="%" foreground-color="#e74c3c" background-color="#ecf0f1"></ng-gauge>
-		      </md-card-content>
-		    </md-card>
-		  </div>
-		  <div flex-xs="" flex-gt-xs="25" layout="column">
-		    <md-card>
-		      <md-card-title>
-		        <md-card-title-text>
-		          <span class="md-headline">Availability</span>
-		        </md-card-title-text>
-		      </md-card-title>
-		      <md-card-content layout="row" layout-align="center center">
-		        <ng-gauge size="200" type="arch" thick="7" value="availability" cap="round" label="Normal" append="%" foreground-color="yellow" background-color="#ecf0f1"></ng-gauge>
-		      </md-card-content>
-		    </md-card>
-		  </div>
-		  <div flex-xs="" flex-gt-xs="25" layout="column">
-		    <md-card>
-		      <md-card-title>
-		        <md-card-title-text>
-		          <span class="md-headline">Quality</span>
-		        </md-card-title-text>
-		      </md-card-title>
-		      <md-card-content layout="row" layout-align="center center">
-		        <ng-gauge size="200" type="arch" thick="7" value="quality" cap="round" label="Normal" append="%" foreground-color="#2ecc71" background-color="#ecf0f1"></ng-gauge>
-		      </md-card-content>
-		    </md-card>
-		  </div>
-		  <div flex-xs="" flex-gt-xs="25" layout="column">
-		    <md-card>
-		      <md-card-title>
-		        <md-card-title-text>
-		          <span class="md-headline">Performance</span>
-		        </md-card-title-text>
-		      </md-card-title>
-		      <md-card-content layout="row" layout-align="center center">
-		        <ng-gauge size="200" type="arch" thick="7" value="performance" cap="round" label="Normal" append="%" foreground-color="#2980b9" background-color="#ecf0f1"></ng-gauge>
-		      </md-card-content>
-		    </md-card>
-		  </div>
+<div layout="column" style="height:{{hght}};" ng-cloak="" class="toolbardemoScrollShrink" layout="column">
+  
+	<md-toolbar style="z-index: 200">
+		<div class="md-toolbar-tools" layout="row" layout-xs="column">
+			<md-truncate>Machine 1: 2WSM-Auto</md-truncate>
+			<span flex=""></span>
+			<md-truncate>VEPL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</md-truncate>
 		</div>
+	</md-toolbar>
+	<md-toolbar md-scroll-shrink="" ng-if="true" md-shrink-speed-factor="0.9">
+		<div layout="row" layout-align="start center" class="md-toolbar-tools">
+			<h3>
+				<span>Timeframe</span>
+			</h3>
+			<div class="select" ng-click="selclicked()">
+				<md-input-container class="md-block">
+					<md-select ng-model="filt.duration" md-container-class="my-container" class="my-md-select">
+						<md-option ng-repeat="duration in durations" value="{{duration.id}}">
+							{{duration.name}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+		</div>
+	</md-toolbar>
+
+	<md-content flex="" layout-fill>
+		<div flex id="container" style="height:230px;"></div>
+		<br>
+		<div layout-xs="column" layout="row">
+			<div flex-xs flex-gt-xs="33">
+				<md-card>
+					<md-card-title class="alert-info">
+						<md-card-title-text>
+							<span class="md-headline">Total: {{::totalCount}}</span>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</div>
+			<div flex-xs flex-gt-xs="33">
+				<md-card>
+					<md-card-title class="alert-success">
+						<md-card-title-text>
+							<span class="md-headline">OK: {{::okcount}}</span>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</div>
+			<div flex-xs flex-gt-xs="33">
+				<md-card>
+					<md-card-title class="alert-danger">
+						<md-card-title-text>
+							<span class="md-headline">Unplanned Downtime: {{::downtime}} min</span>
+						</md-card-title-text>
+					</md-card-title>
+				</md-card>
+			</div>
+		</div>
+		<div layout-xs="column" layout="row">
+			<div flex-xs="" flex-gt-xs="25" layout="column">
+				<md-card>
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">OEE</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center">
+						<ng-gauge size="200" type="arch" thick="7" value="oee" cap="round" label="Normal" append="%" foreground-color="#e74c3c" background-color="#ecf0f1"></ng-gauge>
+					</md-card-content>
+				</md-card>
+			</div>
+			<div flex-xs="" flex-gt-xs="25" layout="column">
+			    <md-card>
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">Availability</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center">
+						<ng-gauge size="200" type="arch" thick="7" value="availability" cap="round" label="Normal" append="%" foreground-color="yellow" background-color="#ecf0f1"></ng-gauge>
+					</md-card-content>
+				</md-card>
+			</div>
+			<div flex-xs="" flex-gt-xs="25" layout="column">
+				<md-card>
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">Quality</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center">
+						<ng-gauge size="200" type="arch" thick="7" value="quality" cap="round" label="Normal" append="%" foreground-color="#2ecc71" background-color="#ecf0f1"></ng-gauge>
+					</md-card-content>
+				</md-card>
+			</div>
+			<div flex-xs="" flex-gt-xs="25" layout="column">
+				<md-card>
+					<md-card-title>
+						<md-card-title-text>
+							<span class="md-headline">Performance</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center">
+						<ng-gauge size="200" type="arch" thick="7" value="performance" cap="round" label="Normal" append="%" foreground-color="#2980b9" background-color="#ecf0f1"></ng-gauge>
+					</md-card-content>
+				</md-card>
+			</div>
+		</div>
+		<br>
 		<div flex id="container2" style="height:300px;"></div>
 	</md-content>
 </div>
