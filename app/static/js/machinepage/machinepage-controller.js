@@ -25,6 +25,8 @@ angular.module('fractalApp')
         $scope.plannedDowntime=resolvedAjaxItems.plannedDowntime;
 
         $scope.hght = (window.innerHeight-120) + 'px';
+        $scope.hght1 = window.outerHeight + 'px';
+        $scope.hght2 = window.screen.availHeight + 'px';
         // $scope.wdth = window.innerWidth + 'px';
         // console.log($scope.wdth);
         // console.log($scope.hght);
