@@ -32,7 +32,7 @@
 				<md-card>
 					<md-card-title class="alert-info">
 						<md-card-title-text>
-							<span class="md-headline">Total: {{hght}}</span>
+							<span class="md-headline">Total: {{::totalCount}}</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>
@@ -41,7 +41,7 @@
 				<md-card>
 					<md-card-title class="alert-success">
 						<md-card-title-text>
-							<span class="md-headline">OK: {{hght1}}</span>
+							<span class="md-headline">OK: {{::okcount}}</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>
@@ -50,7 +50,7 @@
 				<md-card>
 					<md-card-title class="alert-danger">
 						<md-card-title-text>
-							<span class="md-headline">Unplanned Downtime: {{hght2}} min</span>
+							<span class="md-headline">Unplanned Downtime: {{::downtime}} min</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>

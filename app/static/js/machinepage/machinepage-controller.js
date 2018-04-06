@@ -4,9 +4,13 @@ angular.module('fractalApp')
 	.controller('machinepageController', ['$filter', '$window', '$scope', '$rootScope', '$modal', '$location', '$cookieStore', 'resolvedAjaxItems', 'machinepagerTemp', 'machinepagerCond', 'machinepagerTimer',
 		function ($filter, $window, $scope, $rootScope, $modal, $location, $cookieStore, resolvedAjaxItems, machinepagerTemp, machinepagerCond, machinepagerTimer) {
 
+		if (window.outerWidth < 600) {
+        	$scope.hght = (window.outerHeight-120) + 'px';
+        } else {
+        	$scope.hght = (window.innerHeight-120) + 'px';
+        };
 
 		console.log(resolvedAjaxItems);
-
 		
 		$scope.offdata=resolvedAjaxItems.offdata;
 		$scope.ondata=resolvedAjaxItems.ondata;
@@ -24,9 +28,9 @@ angular.module('fractalApp')
         $scope.unplannedDowntime=resolvedAjaxItems.unplannedDowntime;
         $scope.plannedDowntime=resolvedAjaxItems.plannedDowntime;
 
-        $scope.hght = (window.innerWidth-120) + 'px';
-        $scope.hght1 = window.outerWidth + 'px';
-        $scope.hght2 = window.screen.availWidth + 'px';
+        // $scope.hght = (window.innerWidth-120) + 'px';
+        // $scope.hght1 = window.outerWidth + 'px';
+        // $scope.hght2 = window.screen.availWidth + 'px';
         // $scope.wdth = window.innerWidth + 'px';
         // console.log($scope.wdth);
         // console.log($scope.hght);
