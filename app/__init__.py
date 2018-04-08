@@ -37,6 +37,7 @@ from app.models import cyclelog
 # from app.models import dtlog
 # from app.models import currentdata
 from app.models import aliverow
+from app.models import shiftstat
 
 
 from app.routes import index
@@ -46,7 +47,6 @@ from app.routes import create_admin_entries
 from app.routes import localcommunications
 from app.routes import floorviews
 from app.routes import machinepages
-from app.routes import shiftstat
 
 
 from app.functionss import access
