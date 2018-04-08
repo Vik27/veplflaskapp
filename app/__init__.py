@@ -46,6 +46,7 @@ from app.routes import create_admin_entries
 from app.routes import localcommunications
 from app.routes import floorviews
 from app.routes import machinepages
+from app.routes import shiftstat
 
 
 from app.functionss import access
