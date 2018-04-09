@@ -54,6 +54,7 @@ def ichenmsgs():
 		sess.add(w)
 		sess.commit()
 		sess.close()
+		clear_mappers()
 
 
 
