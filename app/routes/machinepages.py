@@ -1,5 +1,5 @@
 from app import app, db, mail, bcrypt
-from flask import abort, jsonify, request, send_file, g, session
+from flask import abort, jsonify, request, send_file, g
 import datetime
 import json
 from app.functionss import access
@@ -11,12 +11,27 @@ import smtplib
 from app.models import cyclelog, aliverow
 # from email.mime.text import MIMEText
 
+
+from sqlalchemy import Table, Column, Integer, Float, DateTime ,String, Unicode, MetaData, create_engine
+from sqlalchemy.orm import mapper, create_session
+
+
+
 from threading import Thread
 import pprint
 
 import datetime as dt
 # def conTime(timestamp):
 # 	return int(timestamp.strftime("%s"))*1000
+
+
+class Cyclelogx(object):
+    pass
+
+e = create_engine('mysql://root:qwe123@localhost:3306/fractaliot')
+metadata = MetaData(bind=e)
+
+
 
 shift1=datetime.time(hour=7, minute=0, second=0)
 
@@ -59,12 +74,12 @@ def conTime(timestamp):
 @access.log_required1
 def get_mc_summary():
 
-	# timey= datetime.datetime.now()
+	timey= datetime.datetime.now().replace(day=04, month=04, year=2018, hour=7, minute=0,second=0)
 	# timey= datetime.datetime.now()-datetime.timedelta(hours=20)
-	timey= datetime.datetime.now()+datetime.timedelta(hours=5, minutes=30)
+	# timey= datetime.datetime.now()+datetime.timedelta(hours=5, minutes=30)
 
 
-	if timey.time()>shift1 and timey.time()<shift2:
+	if timey.time()>=shift1 and timey.time()<shift2:
 		vv=timey.replace(hour=7, minute=0, second=0)
 		shiftId=1
 
@@ -141,3 +156,30 @@ def get_mc_summary():
 					'stdProductionRate':stdProductionRate, 'actualProductionRate':actualProductionRate,
 					'unplannedDowntime':downtime*60.0,'plannedDowntime':currentPlannedDowntime,
 					}), 200
+
+
+
+
+# @app.route('/noviga/machinepages/summary', methods = ['GET'])
+# @access.log_required1
+# def get_mc_summary():
+# 	print "grrr"
+# 	mcid=5
+
+
+# 	tn='cyclelog'+str(mcid)
+# 	t = Table(tn, metadata, Column('id', Integer, primary_key=True),
+# 		    Column('timestamp', DateTime), Column('modelNo', String(256)), Column('okcount', Integer),
+# 		    Column('totalproduction', Integer), Column('rejectionreasons', String(256)))
+# 	mapper(Cyclelogx, t)
+
+# 	sess = create_session(bind=e, autocommit=False, autoflush=True)
+
+# 	w = sess.query(Cyclelogx).filter_by(id=1).one()
+# 	print w.okcount
+
+# 	w = sess.query(Cyclelogx).get(1)
+# 	print w.okcount	
+
+# 	sess.close()
+# 	return jsonify({'ondata': 2}), 200

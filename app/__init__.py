@@ -38,6 +38,7 @@ from app.models import cyclelog
 # from app.models import currentdata
 from app.models import aliverow
 from app.models import shiftstat
+from app.models import takveshiftstat
 
 
 from app.routes import index
