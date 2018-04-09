@@ -22,9 +22,6 @@ class Cyclelogx(object):
 class Aliverowx(object):
  	pass
  		
-e = create_engine('mysql://root:qwe123@localhost:3306/fractaliot')
-metadata = MetaData(bind=e)
-
 
 
 
@@ -33,6 +30,9 @@ def ichenmsgs():
 	j = request.json
 
 	if j['type'] == 'CycleData':
+
+		e = create_engine('mysql://root:qwe123@localhost:3306/fractaliot')
+		metadata = MetaData(bind=e)
 		mcid=j['machineNo']
 
 		tn='cyclelog'+str(mcid)
@@ -60,39 +60,5 @@ def ichenmsgs():
 
 	return jsonify({'result': 'success', 'type': j['type']})
 
-
-
-
-
-# @app.route('/fractal/boschmsgs', methods = ['POST'])
-# def ichenmsgs():
-
-# 	dd=datetime.datetime.now()
-
-# 	j = request.json
-
-# 	if j['type'] == 'CycleData':
-		
-# 		cyclogEnt = cyclelog.Cyclelog(
-# 			timestamp = datetime.datetime.strptime(j['timeStamp'], '%Y-%b-%d %H:%M:%S'),
-# 			modelNo = j['modelNo'],
-# 			okcount = j['okCount'],
-# 			totalproduction = j['tpCount'],
-			
-# 			)
-# 		db.session.add(cyclogEnt)
-# 		db.session.commit()
-
-
-# 	if j['type']=='Alive':
-# 		row1 = aliverow.Aliverow.query.get(1)
-# 		row1.timestamp = dd
-# 		db.session.merge(row1)
-# 		db.session.commit()
-# 		idtoret = 1
-
-# 	# db.session.commit()
-
-# 	return jsonify({'result': 'success', 'type': j['type']})
 
 
