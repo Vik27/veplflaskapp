@@ -22,9 +22,6 @@ class Cyclelogx(object):
 class Aliverowx(object):
  	pass
  		
-e = create_engine('mysql://root:qwe123@localhost:3306/fractaliot')
-metadata = MetaData(bind=e)
-
 
 
 
@@ -33,6 +30,9 @@ def ichenmsgs():
 	j = request.json
 
 	if j['type'] == 'CycleData':
+
+		e = create_engine('mysql://root:qwe123@localhost:3306/fractaliot')
+		metadata = MetaData(bind=e)
 		mcid=j['machineNo']
 
 		tn='cyclelog'+str(mcid)
