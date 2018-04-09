@@ -8,7 +8,7 @@ import datetime
 
 
 from sqlalchemy import Table, Column, Integer, Float, DateTime ,String, Unicode, MetaData, create_engine
-from sqlalchemy.orm import mapper, create_session
+from sqlalchemy.orm import mapper, create_session, clear_mappers
 
 
 import datetime as dt
