@@ -30,16 +30,18 @@
 									<i ng-class="{'fa fa-gear fa-spin': machine.status === 'on', 'fa fa-power-off': machine.status === 'off', 'fa fa-ban': machine.status === 'disconnected'}"></i>
 								</div>
 								<div class="title" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
-									{{machine.machineNo}}: {{machine.machineName}}
+									{{machine.id}}: {{machine.machineName}}
 								</div>
 								<div class="comment" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
-									{{machine.make}}
+									<span>{{machine.plant}}</span>
+                  &nbsp;<i class="fa fa-arrow-right"></i>&nbsp;
+                  <span>{{machine.site}}</span>
 								</div>
 								<hr/>
 								<div class="row comment" style="font-size: 20px; margin-top: 10px">
 									<span class="pull-left" ng-class="{'titgreen': machine.currentOEE > machine.previousOEE, 'titred': machine.currentOEE <= machine.previousOEE}">
 										Current: <b>{{machine.currentOEE}} %</b>&nbsp;
-										<i class="fa fa-chevron-circle-up"></i>
+										<i ng-class="{'fa fa-chevron-circle-down': machine.currentOEE<=machine.previousOEE, 'fa fa-chevron-circle-up': machine.currentOEE>machine.previousOEE}"></i>
 									</span>
 									<span class="pull-right">
 										Prev: <b>{{machine.previousOEE}} %</b>

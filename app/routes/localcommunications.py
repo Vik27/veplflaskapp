@@ -2,7 +2,7 @@ from app import app, db
 from flask import request, jsonify, Response, render_template, g
 import json
 from app.functionss import access
-from app.models import cyclelog, aliverow
+from app.models import cyclelog, aliverow, cyclelognew, cyclelognew2, aliverow2
 import datetime
 
 
@@ -23,6 +23,45 @@ class Aliverowx(object):
  	pass
  		
 
+
+@app.route('/fractal/mcmsgsnew', methods=['POST'])
+def mcmsgsnew():
+
+	j = request.json
+
+	if j['type'] == 'CycleData':
+		newcyc = cyclelognew.Cyclelognew(timestamp = datetime.datetime.now(), count = j['count'], faultCode = j['faultCode'])
+		db.session.add(newcyc)
+		db.session.commit()
+
+	if j['type'] == 'Alive':
+#		newalive = aliverow.Aliverow(timestamp = datetime.datetime.now())
+		newalive = aliverow.Aliverow.query.get(1)
+		newalive.timestamp = datetime.datetime.now()
+		db.session.add(newalive)
+		db.session.commit()
+
+	return jsonify({'result': 'success'}), 201
+
+
+@app.route('/fractal/mcmsgsnew2', methods=['POST'])
+def mcmsgsnew2():
+
+        j = request.json
+
+        if j['type'] == 'CycleData':
+                newcyc = cyclelognew2.Cyclelognew2(timestamp = datetime.datetime.now(), count = j['count'], faultCode = j['faultCode'])
+                db.session.add(newcyc)
+                db.session.commit()
+
+        if j['type'] == 'Alive':
+#               newalive = aliverow.Aliverow(timestamp = datetime.datetime.now())
+                newalive = aliverow2.Aliverow2.query.get(1)
+                newalive.timestamp = datetime.datetime.now()
+                db.session.add(newalive)
+                db.session.commit()
+
+        return jsonify({'result': 'success'}), 201
 
 
 @app.route('/fractal/mcmsgs', methods = ['POST'])

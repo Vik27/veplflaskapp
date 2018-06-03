@@ -1,23 +1,93 @@
 
-<div style="height:{{hght}};" ng-cloak="" class="toolbardemoScrollShrink" layout="column">
+<script type="text/ng-template" id="dayShift.dialog.html">
+	<md-dialog aria-label="Custom Period Selection">
+		<form ng-cloak>
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<h2>Select Custom Period</h2>
+					<span flex></span>
+					<md-button class="md-icon-button" ng-click="cancel()">
+						<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+					</md-button>
+				</div>
+			</md-toolbar>
+
+			<md-dialog-content>
+				<div class="md-dialog-content" layout="column" layout-align="space-between center">
+					<div layout="row" flex layout-align="center start" style="width: 100%">
+						<div flex=20 style="min-height: 74px;" layout="column" layout-align="center center">
+							<md-icon><i class="material-icons png-icon">today</i></md-icon>
+						</div>
+						<div flex=80 layout="column" layout-align="center center">
+							<md-input-container>
+								<label>Enter date</label>
+								<md-datepicker ng-model="custom.date" md-placeholder="Enter date" md-open-on-focus="" md-hide-icons="calendar"></md-datepicker>
+							</md-input-container>
+						</div>
+					</div>
+					<div layout="row" flex layout-align="center start" style="width: 100%">
+						<div flex=20 style="min-height: 74px;" layout="column" layout-align="center center">
+							<md-icon md-svg-src="img/icons/ic_access_time_24px.svg" class="name"></md-icon>
+						</div>
+						<div flex=80 layout="column" layout-align="center center">
+							<md-input-container class="md-block" ng-show="shiftSelect===true" style="width: 130px">
+								<label>Select shift</label>
+								<md-select ng-model="custom.shift" ng-show="shiftSelect===true">
+									<md-option value="1">A</md-option>
+									<md-option value="2">B</md-option>
+									<md-option value="3">C</md-option>
+								</md-select>
+							</md-input-container>
+						</div>
+					</div>
+				</div>
+			</md-dialog-content>
+
+			<md-dialog-actions layout="row">
+				<span flex></span>
+				<md-button md-colors="{color: 'default-primary'}"ng-click="ok()">
+					Okay!
+				</md-button>
+			</md-dialog-actions>
+		</form>
+	</md-dialog>
+</script>
+
+<div style="height:{{hght}};" ng-cloak="" layout="column" flex="">
   
-	<md-toolbar style="z-index: 200">
-		<div class="md-toolbar-tools" layout="row" layout-xs="column">
-			<md-truncate>Machine 1: 2WSM-Auto</md-truncate>
-			<span flex=""></span>
-			<md-truncate>VEPL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</md-truncate>
+	<md-toolbar style="z-index: 200" class="md-whiteframe-3dp">
+		<div class="md-toolbar-tools" layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="center start">
+			<h3>
+				<span ng-show="machineId===1"> Machine 1: 2WSM-Auto</span>
+				<span ng-hide="machineId===1"> Machine 2: SM-250 (A)</span>
+			</h3>
+			<!-- <span flex=""></span> -->
+			<h3>
+				<span ng-show="machineId===1" ng-class="{'md-body-1': screensize === 'mobile'}" md-colors="{color: 'default-background-400'}">VEPL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</span>
+				<span ng-hide="machineId===1" ng-class="{'md-body-1': screensize === 'mobile'}" md-colors="{color: 'default-background-400'}">VEPL-VI&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Moulding</span>
+			</h3>
 		</div>
 	</md-toolbar>
-	<md-toolbar md-scroll-shrink="" ng-if="true" md-shrink-speed-factor="0.9">
-		<div layout="row" layout-align="start center" class="md-toolbar-tools">
-			<h3>
-				<span>Timeframe</span>
+	<md-toolbar md-scroll-shrink="" ng-if="true" md-shrink-speed-factor="0.9" md-colors="{background: 'default-background-200', color: 'green-700'}" md-whiteframe="1">
+		<div layout="row" layout-align-xs="space-between center" class="md-toolbar-tools" style="height: 100%">
+			<h3 flex-gt-xs="15">
+				<span ng-class="{'md-body-2': screensize === 'mobile'}">Timeframe</span>
 			</h3>
-			<div class="select" ng-click="selclicked()">
+			<div class="select-duration" flex-gt-xs="15" ng-click="selclicked('duration')">
 				<md-input-container class="md-block">
-					<md-select ng-model="filt.duration" md-container-class="my-container" class="my-md-select">
-						<md-option ng-repeat="duration in durations" value="{{duration.id}}">
+					<md-select ng-model="filt.duration" md-container-class="my-container-duration" class="my-md-select-duration" ng-class="{'md-subhead': screensize === 'mobile'}" aria-label="selectDuration" ng-disabled="pageLoading">
+						<md-option ng-repeat="duration in durations" value="{{duration.id}}" ng-disabled="duration.disabled">
 							{{duration.name}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+			<span hide-xs flex-gt-xs="5"></span>
+			<div class="select-period" flex-xs="50" flex-gt-xs="25" ng-click="selclicked('period')">
+				<md-input-container class="md-block">
+					<md-select ng-model="filt.period" md-container-class="my-container-period" class="my-md-select-period" ng-class="{'md-subhead': screensize === 'mobile'}" aria-label="selectPeriod" ng-change="periodChanged('{{filt.period}}')" ng-disabled="pageLoading">
+						<md-option ng-repeat="period in periods" value="{{period.id}}">
+							{{period.name}}
 						</md-option>
 					</md-select>
 				</md-input-container>
@@ -26,32 +96,45 @@
 	</md-toolbar>
 
 	<md-content flex="" layout-fill>
-		<div flex id="container" style="height:230px;"></div>
-		<br>
+		<md-card>
+			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+			<div flex id="container" style="height:230px;">
+				<!-- <md-progress-linear md-mode="query"></md-progress-linear>
+				<div class="bottom-block">
+					<span>Loading chart data...</span>
+			    </div> -->
+			</div>
+		</md-card>
 		<div layout-xs="column" layout="row">
 			<div flex-xs flex-gt-xs="33">
 				<md-card>
-					<md-card-title class="alert-info">
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-info'">
 						<md-card-title-text>
-							<span class="md-headline">Total: {{::totalCount}}</span>
+							<span class="md-headline" ng-if="!pageLoading">Total: {{::totalCount}}</span>
+							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>
 			</div>
 			<div flex-xs flex-gt-xs="33">
 				<md-card>
-					<md-card-title class="alert-success">
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-success'">
 						<md-card-title-text>
-							<span class="md-headline">OK: {{::okcount}}</span>
+							<span class="md-headline" ng-if="!pageLoading">OK: {{::okcount}}</span>
+							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>
 			</div>
 			<div flex-xs flex-gt-xs="33">
 				<md-card>
-					<md-card-title class="alert-danger">
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-danger'">
 						<md-card-title-text>
-							<span class="md-headline">Unplanned Downtime: {{::downtime}} min</span>
+							<span class="md-headline" ng-if="!pageLoading">Unplanned Downtime: {{::downtime}} min</span>
+							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
 				</md-card>
@@ -60,55 +143,75 @@
 		<div layout-xs="column" layout="row">
 			<div flex-xs="" flex-gt-xs="25" layout="column">
 				<md-card>
-					<md-card-title>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
 						<md-card-title-text>
-							<span class="md-headline">OEE</span>
+							<span class="md-headline" style="color: {{color}}">OEE</span>
 						</md-card-title-text>
 					</md-card-title>
-					<md-card-content layout="row" layout-align="center center">
-						<ng-gauge size="200" type="arch" thick="7" value="oee" cap="round" label="Normal" append="%" foreground-color="#e74c3c" background-color="#ecf0f1"></ng-gauge>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<ng-gauge size="200" type="arch" thick="7" value="oee" cap="round" label="{{label}}" append="{{append}}" foreground-color="{{foreColor1}}" background-color="{{backColor}}" value-color="{{valueColor}}" label-color="{{labelColor}}"></ng-gauge>
 					</md-card-content>
 				</md-card>
 			</div>
 			<div flex-xs="" flex-gt-xs="25" layout="column">
 			    <md-card>
-					<md-card-title>
+			    	<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
 						<md-card-title-text>
-							<span class="md-headline">Availability</span>
+							<span class="md-headline" style="color: {{color}}">Availability</span>
 						</md-card-title-text>
 					</md-card-title>
-					<md-card-content layout="row" layout-align="center center">
-						<ng-gauge size="200" type="arch" thick="7" value="availability" cap="round" label="Normal" append="%" foreground-color="yellow" background-color="#ecf0f1"></ng-gauge>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<ng-gauge size="200" type="arch" thick="7" value="availability" cap="round" label="{{label}}" append="{{append}}" foreground-color="{{foreColor2}}" background-color="{{backColor}}" value-color="{{valueColor}}" label-color="{{labelColor}}"></ng-gauge>
 					</md-card-content>
 				</md-card>
 			</div>
 			<div flex-xs="" flex-gt-xs="25" layout="column">
 				<md-card>
-					<md-card-title>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
 						<md-card-title-text>
-							<span class="md-headline">Quality</span>
+							<span class="md-headline" style="color: {{color}}">Quality</span>
 						</md-card-title-text>
 					</md-card-title>
-					<md-card-content layout="row" layout-align="center center">
-						<ng-gauge size="200" type="arch" thick="7" value="quality" cap="round" label="Normal" append="%" foreground-color="#2ecc71" background-color="#ecf0f1"></ng-gauge>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<ng-gauge size="200" type="arch" thick="7" value="quality" cap="round" label="{{label}}" append="{{append}}" foreground-color="{{foreColor3}}" background-color="{{backColor}}" value-color="{{valueColor}}" label-color="{{labelColor}}"></ng-gauge>
 					</md-card-content>
 				</md-card>
 			</div>
 			<div flex-xs="" flex-gt-xs="25" layout="column">
 				<md-card>
-					<md-card-title>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
 						<md-card-title-text>
-							<span class="md-headline">Performance</span>
+							<span class="md-headline" style="color: {{color}}">Performance</span>
 						</md-card-title-text>
 					</md-card-title>
-					<md-card-content layout="row" layout-align="center center">
-						<ng-gauge size="200" type="arch" thick="7" value="performance" cap="round" label="Normal" append="%" foreground-color="#2980b9" background-color="#ecf0f1"></ng-gauge>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<ng-gauge size="200" type="arch" thick="7" value="performance" cap="round" label="{{label}}" append="{{append}}" foreground-color="{{foreColor4}}" background-color="{{backColor}}" value-color="{{valueColor}}" label-color="{{labelColor}}"></ng-gauge>
 					</md-card-content>
 				</md-card>
 			</div>
 		</div>
-		<br>
-		<div flex id="container2" style="height:300px;"></div>
+		<div layout-xs="column" layout-gt-xs="row">
+			<div flex-xs="" flex-gt-xs="50">
+				<md-card>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<div id="container2" style="height:300px;"></div>
+				</md-card>
+			</div>
+			<div flex-xs="" flex-gt-xs="50" ng-hide="totalReject===0">
+				<md-card>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<div id="container3" style="height:300px;"></div>
+				</md-card>
+			</div>
+		</div>
+		<!-- <md-card ng-show="totalReject===0">
+			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+			<div flex id="container4" style="height:300px;"></div>
+		</md-card> -->
 	</md-content>
 </div>
 

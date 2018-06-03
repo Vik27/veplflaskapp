@@ -1,8 +1,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('fractalApp', 
-  ['ngResource', 'ngRoute', 'ui.bootstrap', 'ui.date', 'ngCookies',
-  'angularjs-dropdown-multiselect', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache',
-  'angularjs-gauge'])
+  ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngCookies',
+  'ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'angularjs-gauge', 'treeGrid'])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider

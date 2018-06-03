@@ -3,12 +3,12 @@
 angular.module('fractalApp')
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-      .when('/machine/:id', {
-        templateUrl: '/static/views/machinepage/machinepage.html',
-        controller: 'machinepageController',
+      .when('/plantwise', {
+        templateUrl: '/static/views/plantwise/plantwise.html',
+        controller: 'plantwiseController',
         resolve:{
-          resolvedAjaxItems: ['$q', '$rootScope', '$route' ,'machinepager', 'AuthService',
-          function ($q, $rootScope, $route, machinepager, AuthService) {
+          resolvedAjaxItems: ['$q', '$rootScope', '$route' ,'plantwisepage', 'AuthService',
+          function ($q, $rootScope, $route, plantwisepage, AuthService) {
             var deferred = $q.defer();
             AuthService.getUser()
             .then(
@@ -20,9 +20,7 @@ angular.module('fractalApp')
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
                   $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
-                  var fil = {'duration': '1', 'period': '1'};
-                  var cust = {};
-                  machinepager.get({id: $route.current.params.id, filt: fil, custom: cust}, function(data) {
+                  plantwisepage.get(function(data) {
                     deferred.resolve(data);
                   });
                 }

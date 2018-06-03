@@ -12,23 +12,30 @@ class User(db.Model):
     
     contact_email = db.Column(db.String(50))
 
-    role = db.Column(db.Enum('Admin', 'Smgr', 'Mgr', 'Eng'))
+    designation = db.Column(db.Enum('Admin', 'Smgr', 'Mgr', 'Eng'))
 
-    responsibility = db.Column(db.Enum('Electrical', 'Electronics', 'Both'))
+    responsibility = db.Column(db.Enum('Plant', 'Corporate', 'Both'))
 
     phoneNo = db.Column(db.BigInteger)
 
     businessId = db.Column(db.Integer,db.ForeignKey('business.id'))
+
+    departmentid =db.Column(db.Integer)
+
+    name = db.Column(db.String(30))
     
 
-    def __init__(self, username, password, contact_email, role, responsibility, phoneNo, businessId):
+    def __init__(self, username, password, contact_email, designation, 
+                    responsibility, phoneNo, businessId, departmentid, name):
         self.username = username
         self.password = bcrypt.generate_password_hash(password)
         self.contact_email = contact_email
-        self.role = role
+        self.designation = designation
         self.responsibility = responsibility
         self.phoneNo = phoneNo
         self.businessId = businessId
+        self.departmentid = departmentid
+        self.name = name
 
 
     def to_dict(self):
@@ -36,11 +43,13 @@ class User(db.Model):
             username = self.username,
             password = self.password,
             contact_email = self.contact_email,
-            role = self.role,
+            designation = self.designation,
             responsibility = self.responsibility,
             phoneNo = self.phoneNo,
             id = self.id,
-            businessId = self.businessId
+            businessId = self.businessId,
+            name = self.name,
+            departmentid= self.departmentid,
         )
 
     def __repr__(self):
@@ -61,3 +70,4 @@ class User(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
