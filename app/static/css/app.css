@@ -133,6 +133,10 @@ display: none !important;
   text-align: center;
 }
 
+.mySelect md-select-menu {
+  margin-top: 35px;
+}
+
 /*#container {
   display: block;
   position: relative;

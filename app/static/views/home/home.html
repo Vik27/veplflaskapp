@@ -1,208 +1,184 @@
-
-<div ng-cloak="" class="toolbardemoBasicUsage">
-  <md-content>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <md-truncate>Bottom 5 Performers</md-truncate>
-        <span flex=""></span>
-        <md-button class="md-fab md-mini md-primary" aria-label="Week">
-          <md-tooltip md-direction="bottom">Previous Week</md-tooltip>
-          <img class="png-icon" src="/static/week-sm.png">
-        </md-button>
-        <md-button class="md-icon-button md-accent" aria-label="Month">
-          <md-tooltip md-direction="bottom">Previous Month</md-tooltip>
-          <img class="png-icon" src="/static/month-sm.png">
-          <!-- <md-icon md-svg-src="/static/month-md.png"></md-icon> -->
-        </md-button>
-      </div>
-    </md-toolbar>
-
-    <br>
-
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="OEE">
-      	<div class="row" style="padding-top: 10px">
-      	<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="machine in machines">
-					<div id="pointerTile" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}" style="padding: 1px" ng-click="goToMachine(machine.id)">
-						<rd-widget>
-							<rd-widget-body>
-								<div class="widget-icon pull-left" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}">
-									<i ng-class="{'fa fa-gear fa-spin': machine.status === 'on', 'fa fa-power-off': machine.status === 'off', 'fa fa-ban': machine.status === 'disconnected'}"></i>
-								</div>
-								<div class="title" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
-									{{machine.id}}: {{machine.machineName}}
-								</div>
-								<div class="comment" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
-									<span>{{machine.plant}}</span>
-                  &nbsp;<i class="fa fa-arrow-right"></i>&nbsp;
-                  <span>{{machine.site}}</span>
-								</div>
-								<hr/>
-								<div class="row comment" style="font-size: 20px; margin-top: 10px">
-									<span class="pull-left" ng-class="{'titgreen': machine.currentOEE > machine.previousOEE, 'titred': machine.currentOEE <= machine.previousOEE}">
-										Current: <b>{{machine.currentOEE}} %</b>&nbsp;
-										<i ng-class="{'fa fa-chevron-circle-down': machine.currentOEE<=machine.previousOEE, 'fa fa-chevron-circle-up': machine.currentOEE>machine.previousOEE}"></i>
-									</span>
-									<span class="pull-right">
-										Prev: <b>{{machine.previousOEE}} %</b>
-									</span>
-								</div>
-								<!-- <div class="comment">
-									Achieved: {{machine.prodCount}}
-								</div> -->
-							</rd-widget-body>
-						</rd-widget>
-					</div>
+<div layout="column" style="height:{{hght}};" ng-cloak>
+	<div layout="row" flex>
+		<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4" ng-if="selectedTab!==1">
+			<md-toolbar>
+				<div layout="row">
+					<md-toolbar-filler layout="row" layout-align="center center">
+						<md-icon class="material-icons">settings</md-icon>
+					</md-toolbar-filler>
+					<h2 class="md-toolbar-tools">
+						<span>Settings</span>
+					</h2>
 				</div>
-			</div>
-      </md-tab>
-      <md-tab label="Availability">
-        <md-content layout-xs="column" layout="row">
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Icon action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                  <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Settings">
-                  <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Share">
-                  <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                </md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Vertical action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="column" layout-align="start">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-        </md-content>
-      </md-tab>
-      <md-tab label="Quality">
-        <md-content layout-xs="column" layout="row">
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Icon action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                  <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Settings">
-                  <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Share">
-                  <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                </md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Vertical action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="column" layout-align="start">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-        </md-content>
-      </md-tab>
-      <md-tab label="Performance">
-        <md-content layout-xs="column" layout="row">
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Icon action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-icon-button" aria-label="Favorite">
-                  <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Settings">
-                  <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Share">
-                  <md-icon md-svg-icon="img/icons/share-arrow.svg"></md-icon>
-                </md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-          <div flex-gt-xs="50" layout="column">
-            <md-card>
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Vertical action buttons</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <p>
-                  The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-                </p>
-              </md-card-content>
-              <md-card-actions layout="column" layout-align="start">
-                <md-button>Action 1</md-button>
-                <md-button>Action 2</md-button>
-              </md-card-actions>
-            </md-card>
-          </div>
-        </md-content>
-      </md-tab>
-    </md-tabs>
+			</md-toolbar>
+			<md-content flex layout-fill layout="column" md-scroll-y>
+				
+				<p class="md-subhead" style="padding-left:10px; padding-top: 20px">
+					Select Timeframe:
+				</p>
+				<md-radio-group ng-model="stat_settings.timeframe" ng-change="timeframeChangeHandler()" style="padding-left:20px;">
+					<md-radio-button ng-repeat="item in timeframeItems" value="{{item.id}}" class="md-accent">{{item.name}}</md-radio-button>
+				</md-radio-group>
+				<md-divider></md-divider>
 
-  </md-content>
+				<p class="md-subhead" style="padding-left:10px; padding-top: 20px">
+					Machine Availability:
+				</p>
+				<md-radio-group ng-model="stat_settings.availability" ng-change="availabilityChangeHandler()" style="padding-left:20px;">
+					<md-radio-button ng-repeat="item in availItems" value="{{item.id}}" class="md-accent">{{item.name}}</md-radio-button>
+				</md-radio-group>
+				<md-divider></md-divider>
+
+				<p class="md-subhead" style="padding-left:10px; padding-top: 20px">
+					Production Stats:
+				</p>
+				<md-radio-group ng-model="stat_settings.production" ng-change="productionChangeHandler()" style="padding-left:20px;">
+					<md-radio-button ng-repeat="item in prodItems" value="{{item.id}}" class="md-accent">{{item.name}}</md-radio-button>
+				</md-radio-group>
+				<md-divider></md-divider>
+
+				<p class="md-subhead" style="padding-left:10px; padding-top: 20px">
+					FTR:
+				</p>
+				<md-radio-group ng-model="stat_settings.ftr" ng-change="ftrChangeHandler()" style="padding-left:20px;">
+					<md-radio-button ng-repeat="item in ftrItems" value="{{item.id}}" class="md-accent">{{item.name}}</md-radio-button>
+				</md-radio-group>
+				<md-divider></md-divider>
+
+				<p class="md-subhead" style="padding-left:10px; padding-top: 20px">
+					Downtime Analysis:
+				</p>
+				<md-radio-group ng-model="stat_settings.downtime" ng-change="downtimeChangeHandler()" style="padding-left:20px;">
+					<md-radio-button ng-repeat="item in dtItems" value="{{item.id}}" class="md-accent">{{item.name}}</md-radio-button>
+				</md-radio-group>
+
+			</md-content>
+		</md-sidenav>
+		
+		<md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" md-whiteframe="4" ng-if="selectedTab===1">
+			<md-toolbar>
+				<div layout="row">
+					<md-toolbar-filler layout="row" layout-align="center center">
+						<md-icon class="material-icons">list</md-icon>
+					</md-toolbar-filler>
+					<h2 class="md-toolbar-tools">
+						<span>List of Machines</span>
+					</h2>
+				</div>
+			</md-toolbar>
+			<md-content flex layout-fill layout="column" md-scroll-y>
+				
+				<md-list ng-repeat="plant in plants" ng-cloak>
+					<md-subheader class="md-no-sticky">{{ plant.name }}</md-subheader>
+					<md-list-item ng-repeat="machine in plant.machines">
+						<p> {{ (machines | filter: {id: machine})[0].name }} </p>
+						<md-checkbox class="md-secondary" ng-model="(machines | filter: {id: machine})[0].checked" ng-disabled="(machines | filter: {id: machine})[0].disabled"></md-checkbox>
+					</md-list-item>
+					<md-divider></md-divider>
+				</md-list>
+
+			</md-content>
+		</md-sidenav>
+
+		<md-content flex layout-padding>
+			<md-tabs md-dynamic-height md-stretch-tabs="always" md-border-bottom md-autoselect>
+				<md-tab label="Statistics" ng-click="selectedTab = 2">
+					<md-content layout="column">
+						<div layout="row" layout-xs="column">
+							<div flex-gt-xs="50" layout="column">
+								<md-card md-whiteframe="1">
+									<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+									<div flex id="container1" style="height:340px;"></div>
+								</md-card>
+							</div>
+							<div flex-gt-xs="50" layout="column">
+								<md-card>
+									<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+									<div flex id="container2" style="height:340px;"></div>
+								</md-card>
+							</div>
+						</div>
+						<div layout="row" layout-xs="column">
+							<div flex-gt-xs="50" layout="column">
+								<md-card>
+									<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+									<div flex id="container3" style="height:340px;"></div>
+								</md-card>
+							</div>
+							<div flex-gt-xs="50" layout="column">
+								<md-card>
+									<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+									<div flex id="container4" style="height:340px;"></div>
+								</md-card>
+							</div>
+						</div>
+					</md-content>
+				</md-tab>
+				<md-tab label="Favorites" ng-click="selectedTab = 1">
+					<div class="row" style="padding-top: 10px">
+			        	<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="machine in favmachines">
+		  					<div id="pointerTile" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}" style="padding: 1px" ng-click="goToMachine(machine.id)">
+		  						<rd-widget>
+		  							<rd-widget-body>
+		  								<div class="widget-icon pull-left" ng-class="{'green': machine.status === 'on', 'red': machine.status === 'off', 'grey': machine.status === 'disconnected'}">
+		  									<i ng-class="{'fa fa-gear fa-spin': machine.status === 'on', 'fa fa-power-off': machine.status === 'off', 'fa fa-ban': machine.status === 'disconnected'}"></i>
+		  								</div>
+		  								<div class="title" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}" style="max-width: 70%; overflow-x: hidden; white-space: nowrap;">
+		  									{{machine.id}}: {{machine.machineName}}
+		  								</div>
+		  								<div class="comment" ng-class="{'titgreen': machine.status === 'on', 'titred': machine.status === 'off', 'titgrey': machine.status === 'disconnected'}">
+		  									<span>{{machine.plant}}</span>
+						                    &nbsp;<i class="fa fa-arrow-right"></i>&nbsp;
+						                    <span>{{machine.site}}</span>
+		  								</div>
+		  								<hr/>
+		  								<div class="row comment" style="font-size: 20px; margin-top: 10px">
+		  									<span class="pull-left titgreen">
+		  										Count: <b>{{machine.currentOEE}}</b>
+		  									</span>
+		  									<span class="pull-right titred">
+		  										DT: <b>{{machine.previousOEE}} mins</b>
+		  									</span>
+		  								</div>
+		  								<!-- <div class="comment">
+		  									Achieved: {{machine.prodCount}}
+		  								</div> -->
+		  							</rd-widget-body>
+		  						</rd-widget>
+		  					</div>
+		  				</div>
+		  			</div>
+					<div flex></div>
+				</md-tab>
+			</md-tabs>
+		</md-content>
+	</div>
 </div>
 
-<!--
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
--->
+
+
+
+
+
+
+					<!-- <div layout="column" layout-align="center center">
+						<p>
+						The left sidenav will 'lock open' on a medium (>=960px wide) device.
+						</p>
+						<p>
+						The right sidenav will focus on a specific child element.
+						</p>
+						<div>
+							<md-button ng-click="toggleLeft()"
+								class="md-primary" hide-gt-md>
+								Toggle left
+							</md-button>
+						</div>
+						<div>
+							<md-button ng-click="toggleRight()"
+								ng-hide="isOpenRight()"
+								class="md-primary">
+								Toggle right
+							</md-button>
+						</div>
+					</div> -->

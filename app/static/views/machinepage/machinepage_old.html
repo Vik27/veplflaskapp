@@ -53,88 +53,56 @@
 	</md-dialog>
 </script>
 
-<section ng-cloak="" layout="row" flex="">
-
-	<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-		<md-toolbar style="margin-top: 50px">
-			<h1 class="md-toolbar-tools">Select Timeframe</h1>
-		</md-toolbar>
-		<md-content layout-padding layout="column">
-			<div flex-xs flex-gt-xs="50">
-				<md-input-container class="md-block" style="margin-top: 55px">
-					<label for="period"> Period</label>
-					<md-select id="period" ng-model="filt.period" aria-label="selectPeriod" ng-disabled="pageLoading" md-container-class="mySelect" ng-change="periodChangeHandler()">
-						<md-option ng-repeat="period in periods" value="{{period.id}}">
-							{{period.name}}
-						</md-option>
-					</md-select>
-				</md-input-container>
-				<md-input-container class="md-block" style="margin-top: 55px">
-					<label for="duration"> Duration</label>
-					<md-select id="duration" ng-model="filt.duration" aria-label="selectDuration" ng-disabled="pageLoading" md-container-class="mySelect">
+<div style="height:{{hght}};" ng-cloak="" layout="column" flex="">
+  
+	<md-toolbar style="z-index: 200" class="md-whiteframe-3dp">
+		<div class="md-toolbar-tools" layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="center start">
+			<h3>
+				<span ng-show="machineId===1"> Machine 1: 2WSM-Auto</span>
+				<span ng-hide="machineId===1"> Machine 2: SM-250 (A)</span>
+			</h3>
+			<!-- <span flex=""></span> -->
+			<h3>
+				<span ng-show="machineId===1" ng-class="{'md-body-1': screensize === 'mobile'}" md-colors="{color: 'default-background-400'}">VEPL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</span>
+				<span ng-hide="machineId===1" ng-class="{'md-body-1': screensize === 'mobile'}" md-colors="{color: 'default-background-400'}">VEPL-VI&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Moulding</span>
+			</h3>
+		</div>
+	</md-toolbar>
+	<md-toolbar md-scroll-shrink="" ng-if="true" md-shrink-speed-factor="0.9" md-colors="{background: 'default-background-200', color: 'green-700'}" md-whiteframe="1">
+		<div layout="row" layout-align-xs="space-between center" class="md-toolbar-tools" style="height: 100%">
+			<h3 flex-gt-xs="15">
+				<span ng-class="{'md-body-2': screensize === 'mobile'}">Timeframe</span>
+			</h3>
+			<div class="select-duration" flex-gt-xs="15" ng-click="selclicked('duration')">
+				<md-input-container class="md-block">
+					<md-select ng-model="filt.duration" md-container-class="my-container-duration" class="my-md-select-duration" ng-class="{'md-subhead': screensize === 'mobile'}" aria-label="selectDuration" ng-disabled="pageLoading">
 						<md-option ng-repeat="duration in durations" value="{{duration.id}}" ng-disabled="duration.disabled">
 							{{duration.name}}
 						</md-option>
 					</md-select>
 				</md-input-container>
 			</div>
-			<div flex-xs flex-gt-xs="50" ng-show="customSelectionShow">
-				<md-toolbar style="margin-top: 50px">
-					<h1 class="md-toolbar-tools">Custom Period</h1>
-				</md-toolbar>
-				<md-input-container class="md-block" style="margin-top: 55px">
-					<label>Enter date</label>
-					<md-datepicker ng-model="custom.date" md-placeholder="Enter date" md-open-on-focus="" md-hide-icons="calendar"></md-datepicker>
-				</md-input-container>
-				<md-input-container class="md-block" style="margin-top: 55px">
-					<label>Select shift</label>
-					<md-select ng-model="custom.shift">
-						<md-option value="1">A</md-option>
-						<md-option value="2">B</md-option>
-						<md-option value="3">C</md-option>
+			<span hide-xs flex-gt-xs="5"></span>
+			<div class="select-period" flex-xs="50" flex-gt-xs="25" ng-click="selclicked('period')">
+				<md-input-container class="md-block">
+					<md-select ng-model="filt.period" md-container-class="my-container-period" class="my-md-select-period" ng-class="{'md-subhead': screensize === 'mobile'}" aria-label="selectPeriod" ng-change="periodChanged('{{filt.period}}')" ng-disabled="pageLoading">
+						<md-option ng-repeat="period in periods" value="{{period.id}}">
+							{{period.name}}
+						</md-option>
 					</md-select>
 				</md-input-container>
 			</div>
-			<md-button ng-click="closeSidenav('left')" class="md-raised">
-				OK
-			</md-button>
-		</md-content>
-	</md-sidenav>
-  
-	<md-content flex layout-fill layout="column">
-		<md-toolbar style="position: fixed; top: 50px">
-			<div class="md-toolbar-tools" layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="center start">
-				<div flex-gt-xs="40" layout="row" layout-align="start center">
-					<md-button ng-click="toggleSidenav('left')" ng-disabled="true">
-						<md-icon class="material-icons">
-							edit
-						</md-icon>
-					</md-button>
-					<h3>{{shift}}-shift, {{date | date: 'mediumDate'}}</h3>
-				</div>
-				<div flex-gt-xs="60" layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="center center">
-					<h3>
-						<span ng-class="{'md-body-1': screensize === 'mobile'}" ng-show="machineId===1"> Machine 1: 2WSM-Auto</span>
-						<span ng-class="{'md-body-1': screensize === 'mobile'}" ng-hide="machineId===1"> Machine 2: Core Pressing</span>
-					</h3>
-					<h3 ng-if="screensize !== 'mobile'">
-						<span ng-class="{'md-body-1': screensize === 'mobile'}" md-colors="{color: 'default-background-400'}">VEL-III&nbsp; <i class="fa fa-arrow-right"></i>&nbsp; Electrical</span>
-					</h3>
-				</div>
-			</div>
-		</md-toolbar>
-		<md-card style="margin-top: 80px">
-			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-			<div flex id="container1" style="height:230px;">
-			</div>
-		</md-card>
+		</div>
+	</md-toolbar>
+
+	<md-content flex="" layout-fill>
 		<md-card>
 			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-			<div flex id="container2" style="height:230px;">
+			<div flex id="container" style="height:230px;">
 			</div>
 		</md-card>
 		<div layout-xs="column" layout="row">
-			<div flex-xs flex-gt-xs="30">
+			<div flex-xs flex-gt-xs="33">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
 					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-info'">
@@ -145,7 +113,7 @@
 					</md-card-title>
 				</md-card>
 			</div>
-			<div flex-xs flex-gt-xs="30">
+			<div flex-xs flex-gt-xs="33">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
 					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-success'">
@@ -156,7 +124,7 @@
 					</md-card-title>
 				</md-card>
 			</div>
-			<div flex-xs flex-gt-xs="40">
+			<div flex-xs flex-gt-xs="33">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
 					<md-card-title ng-class="pageLoading ? 'alert-disabled' : 'alert-danger'">
@@ -226,16 +194,20 @@
 			<div flex-xs="" flex-gt-xs="50">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-					<div id="container3" style="height:300px;"></div>
+					<div id="container2" style="height:300px;"></div>
 				</md-card>
 			</div>
 			<div flex-xs="" flex-gt-xs="50" ng-hide="totalReject===0">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-					<div id="container4" style="height:300px;"></div>
+					<div id="container3" style="height:300px;"></div>
 				</md-card>
 			</div>
 		</div>
+		<!-- <md-card ng-show="totalReject===0">
+			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+			<div flex id="container4" style="height:300px;"></div>
+		</md-card> -->
 	</md-content>
 </div>
 

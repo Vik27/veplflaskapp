@@ -10,7 +10,7 @@
                     "   <thead>\n" +
                     "     <tr>\n" +
                     "       <th><a ng-if=\"expandingProperty.sortable\" ng-click=\"sortBy(expandingProperty)\">{{expandingProperty.displayName || expandingProperty.field || expandingProperty}}</a><span ng-if=\"!expandingProperty.sortable\">{{expandingProperty.displayName || expandingProperty.field || expandingProperty}}</span><i ng-if=\"expandingProperty.sorted\" class=\"{{expandingProperty.sortingIcon}} pull-right\"></i></th>\n" +
-                    "       <th ng-repeat=\"col in colDefinitions\"><a ng-if=\"col.sortable\" ng-click=\"sortBy(col)\">{{col.displayName || col.field}}</a><span ng-if=\"!col.sortable\">{{col.displayName || col.field}}</span><i ng-if=\"col.sorted\" class=\"{{col.sortingIcon}} pull-right\"></i></th>\n" +
+                    "       <th style=\"text-align: center\" ng-repeat=\"col in colDefinitions\"><a ng-if=\"col.sortable\" ng-click=\"sortBy(col)\">{{col.displayName || col.field}}</a><span ng-if=\"!col.sortable\">{{col.displayName || col.field}}</span><i ng-if=\"col.sorted\" class=\"{{col.sortingIcon}} pull-right\"></i></th>\n" +
                     "     </tr>\n" +
                     "   </thead>\n" +
                     "   <tbody>\n" +
@@ -31,7 +31,7 @@
                     // "              <span  ng-if=\"!expandingProperty.cellTemplate\" class=\"indented tree-label\" ng-click=\"on_user_click(row.branch)\">\n" +
                     // "             {{row.branch[expandingProperty.field] || row.branch[expandingProperty]}}</span>\n" +
                     "       </td>\n" +
-                    "       <td ng-repeat=\"col in colDefinitions\">\n" +
+                    "       <td ng-repeat=\"col in colDefinitions\" style=\"text-align: center\">\n" +
                     "         <div ng-if=\"col.cellTemplate\" compile=\"col.cellTemplate\" cell-template-scope=\"col.cellTemplateScope\"></div>\n" +
                     "         <div ng-if=\"!col.cellTemplate\">{{row.branch[col.field]}}</div>\n" +
                     "       </td>\n" +
