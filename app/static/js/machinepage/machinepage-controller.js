@@ -2,9 +2,9 @@
 
 angular.module('fractalApp')
 	.controller('machinepageController', ['$filter', '$window', '$scope', '$location', '$timeout',
-	'$mdDialog', 'resolvedAjaxItems', 'machinepager',
+	'$mdDialog', 'resolvedAjaxItems', 'machinepager', '$mdSidenav',
 		function ($filter, $window, $scope, $location, $timeout,
-			$mdDialog, resolvedAjaxItems, machinepager) {
+			$mdDialog, resolvedAjaxItems, machinepager, $mdSidenav) {
 
 		if (window.outerWidth < 600) {
 			$scope.screensize = 'mobile';
@@ -27,27 +27,46 @@ angular.module('fractalApp')
         $scope.backColor = '#ecf0f1';
 
 		console.log(resolvedAjaxItems);
-		
-		$scope.offdata=resolvedAjaxItems.offdata;
-		$scope.ondata=resolvedAjaxItems.ondata;
-        $scope.okcount=resolvedAjaxItems.okcount;
-        $scope.totalCount=resolvedAjaxItems.totalCount;
-        $scope.oee=$filter('number')(resolvedAjaxItems.oee,1);
-        $scope.availability=$filter('number')(resolvedAjaxItems.availability,1);
-        $scope.performance=$filter('number')(resolvedAjaxItems.performance,1);
-        $scope.quality=$filter('number')(resolvedAjaxItems.quality,1);
-        $scope.totalOKTime=resolvedAjaxItems.totalOKTime;
-        $scope.totalproductionTime=resolvedAjaxItems.totalproductionTime;
-        $scope.stdProductionRate=resolvedAjaxItems.stdProductionRate;
-        $scope.actualProductionRate=resolvedAjaxItems.actualProductionRate;
-        $scope.downtime=$filter('number')(resolvedAjaxItems.downtime,0);
-        $scope.unplannedDowntime=resolvedAjaxItems.unplannedDowntime;
-        $scope.plannedDowntime=resolvedAjaxItems.plannedDowntime;
-        $scope.leakReject = resolvedAjaxItems.leakReject;
-        $scope.perfReject = resolvedAjaxItems.perfReject;
-        $scope.boltReject = resolvedAjaxItems.boltReject;
-        $scope.totalReject = resolvedAjaxItems.totalReject;
-        $scope.machineId = resolvedAjaxItems.machineId;
+		var resolvedAjaxItems = [{"id": 1, "value": [[1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1], [1528324597000, 0], [1528324597000, 1]], "name": "ondata"}, {"id": 2, "value": [[1528299000000, 0], [1528299000000, 1], [1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1]], "name": "offdata"}, {"id": 3, "value": [[1528299000000, 0], [1528299261000, 0], [1528304353000, 228], [1528306515000, 228], [1528308037000, 309], [1528309215000, 309], [1528316941000, 774], [1528319086000, 774], [1528321832000, 1014], [1528322931000, 1014], [1528322931000, 1014]], "name": "prodRateLine"}, {"id": 4, "value": 0.6211225589515885, "name": "oee"}, {"id": 5, "value": 0.8083880243134887, "name": "availability"}, {"id": 6, "value": 0.8407372168042143, "name": "performance"}, {"id": 7, "value": 0.92581854043392504, "name": "quality"}, {"id": 8, "value": [[9, "Shift Change", 260.823], [0, "Unknown", 4682.823]], "name": "downtimebreakup"}, {"id": 9, "value": [[9, "Pressing Load Fail", 26], [0, "Unknown", 8]], "name": "rejectionbreakup"}]
+		$scope.ondata = $filter('filter')(resolvedAjaxItems, {'id': 1})[0].value;
+		$scope.offdata = $filter('filter')(resolvedAjaxItems, {'id': 2})[0].value;
+		$scope.prodRateLine = $filter('filter')(resolvedAjaxItems, {'id': 3})[0].value;
+		$scope.totalCount = $scope.prodRateLine[$scope.prodRateLine.length-1][1];
+		$scope.oee = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 4})[0].value*100, 1);
+		$scope.availability = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 5})[0].value*100, 1);
+		$scope.performance = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 6})[0].value*100, 1);
+		$scope.quality = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 7})[0].value*100, 1);
+		$scope.okcount = $filter('number')($scope.totalCount*$scope.quality/100, 0);
+		$scope.downtimebreakup = $filter('filter')(resolvedAjaxItems, {'id': 8})[0].value;
+		var downtime = 0;
+		$scope.piedata = [];
+		angular.forEach($scope.downtimebreakup, function (value, key) {
+			$scope.piedata.push({name: value[1], y: value[2]});
+			downtime = downtime + value[2];
+		});
+		$scope.downtime = $filter('number')(downtime, 0)
+		$scope.rejectionbreakup = $filter('filter')(resolvedAjaxItems, {'id': 9})[0].value;
+		$scope.rejectdata = [];
+		angular.forEach($scope.rejectionbreakup, function (value, key) {
+			$scope.rejectdata.push({name: value[1], y: value[2]});
+		});
+
+		$scope.machineId = 1;
+		$scope.date = new Date();
+		$scope.shift = 'B';
+
+		$scope.toggleSidenav = function(menuId) {
+			$mdSidenav(menuId).toggle();
+		};
+
+		$scope.closeSidenav = function(menuId) {
+			$mdSidenav(menuId).close();
+		};
+
+		$scope.periods = [
+        {'id': 1, 'name': 'Current'},
+        {'id': 2, 'name': 'Previous'},
+        {'id': 3, 'name': 'Custom'}];
 
         $scope.durations = [
         {'id': 1, 'name': 'Shift', 'disabled': false},
@@ -57,228 +76,19 @@ angular.module('fractalApp')
         {'id': 5, 'name': 'Quarter', 'disabled': true},
         {'id': 6, 'name': 'Year', 'disabled': true}];
 
-        $scope.periods = [
-        {'id': 1, 'name': 'Current'},
-        {'id': 2, 'name': 'Previous'},
-        {'id': 3, 'name': 'Custom'}];
+        $scope.filt = {'period': 1+'', 'duration': 1+''};
 
-        $scope.filt = {'duration': 1+'', 'period': 1+''};
+        $scope.periodChangeHandler = function () {
+        	if ($scope.filt.period === '3') {
+        		$scope.customSelectionShow = true;
+        	} else {
+        		$scope.customSelectionShow = false;
+        	};
+        };
 
-        $scope.selclicked = function(type){
-			console.log('select division clicked');
-			console.log(type);
-			if (type === 'duration') {
-				var containerTop = $(".my-md-select-duration").offset().top + "px";
-				setTimeout(function(){
-					$(".my-container-duration").css({'top':containerTop});
-				}, 50);
-			} else {
-				var containerTop = $(".my-md-select-period").offset().top + "px";
-				setTimeout(function(){
-					$(".my-container-period").css({'top':containerTop});
-				}, 50);
-			};
-		};
-
-		$scope.showDateShift = function(oldval) {
-			$mdDialog.show({
-				controller: 'DialogController',
-				templateUrl: 'dayShift.dialog.html',
-				parent: angular.element(document.body),
-				clickOutsideToClose:false,
-				locals: {shiftSelect: parseInt($scope.filt.duration)-1},
-				fullscreen: false // Only for -xs, -sm breakpoints.
-			})
-			.then(function(data) {
-				console.log(data);
-				$scope.custom = data;
-				$scope.custom.date = new Date(data.date).getTime();
-				$scope.dateShiftQuery();
-			}, function() {
-				console.log('error in modal close');
-				$scope.custom = undefined;
-				$scope.filt.period = oldval;
-				// $scope.status = 'You cancelled the dialog';
-			});
-		};
-
-		$scope.dateShiftQuery = function () {
-			while ($scope.chart1.series.length > 0 ) {
-				$scope.chart1.series[0].remove(true);
-			};
-			while ($scope.chart2.series.length > 0 ) {
-				$scope.chart2.series[0].remove(true);
-			};
-			while ($scope.chart3.series.length > 0 ) {
-				$scope.chart3.series[0].remove(true);
-			};
-			
-			$scope.pageLoading = true;
-			$scope.chart1.chartBackground.attr({ fill : '#EEEEEE'});
-			$scope.chart2.chartBackground.attr({ fill : '#EEEEEE'});
-			$scope.chart3.chartBackground.attr({ fill : '#EEEEEE'});
-			$scope.chart1.setTitle({ style: {'color': '#EEEEEE'} });
-			$scope.chart2.setTitle({ style: {'color': '#EEEEEE'} });
-			$scope.chart3.setTitle({ style: {'color': '#EEEEEE'} });
-			$scope.chart1.showLoading();
-			$scope.chart2.showLoading();
-			$scope.chart3.showLoading();
-			$scope.color = $scope.valueColor = $scope.backColor = '#EEEEEE';
-			$scope.foreColor1 = $scope.foreColor2 = $scope.foreColor3 = $scope.foreColor4 = '#EEEEEE';
-			$scope.append = '';
-			$scope.label = 'Loading...';
-			$scope.labelColor = '#9FA8DA';
-			$scope.oee = 0;
-			$scope.availability = 0;
-			$scope.quality = 0;
-			$scope.performance = 0;
-			var obj = {
-				id: $scope.machineId,
-				filt: $scope.filt,
-				custom: angular.isDefined($scope.custom) ? $scope.custom : {}
-			};
-
-			machinepager.get(obj, function (data) {
-				console.log(data);
-				if (('date' in obj.custom) && ('shift' in obj.custom)) {
-					// console.log(obj.custom.date);
-					// console.log(obj.custom.shift);
-					var xx = $filter('date')(obj.custom.date, 'mediumDate');
-					// console.log(xx);
-					
-					if (obj.custom.shift === '1') {
-						var yy = 'A';
-					} else if (obj.custom.shift === '2') {
-						var yy = 'B';
-					} else {
-						var yy = 'C';
-					};
-
-					if ($scope.periods.length > 3) {
-						var zz = $filter('filter')($scope.periods, {id: 4})[0];
-						zz.name = yy + ', ' + xx;
-						zz.custom = obj.custom;
-						$scope.filt.period = '4';
-					} else {
-						$scope.periods.push({'id': 4, 'name': yy + ', ' + xx, 'custom': obj.custom })
-						$scope.filt.period = '4';
-					};
-				};
-
-				$scope.custom = undefined;
-
-				$scope.ondata = data.ondata;
-				$scope.offdata = data.offdata;
-				$scope.okcount = data.okcount;
-				$scope.totalCount = data.totalCount;
-				$scope.oee = $filter('number')(data.oee,1);
-				$scope.availability = $filter('number')(data.availability,1);
-				$scope.quality = $filter('number')(data.quality,1);
-				$scope.performance = $filter('number')(data.performance,1);
-				$scope.downtime = $filter('number')(data.downtime,0);
-				$scope.unplannedDowntime = data.unplannedDowntime;
-				$scope.plannedDowntime = data.plannedDowntime;
-				$scope.totalOKTime = data.totalOKTime;
-				$scope.boltReject = data.boltReject;
-				$scope.perfReject = data.perfReject;
-				$scope.leakReject = data.leakReject;
-				$scope.totalReject = data.totalReject;
-
-				$scope.chart1.addSeries({
-	                type: 'area',
-	                name: 'ON',
-	                data: $scope.ondata,
-	                fillColor: '#8BC34A',
-	                color: '#8BC34A'
-	            });
-	            $scope.chart1.addSeries({
-	                type: 'area',
-	                name: 'OFF',
-	                data: $scope.offdata,
-	                fillColor: '#EF5350',
-	                color: '#EF5350'
-	            });
-	            $scope.chart2.addSeries({
-	            	name: 'Time',
-					colorByPoint: true,
-					data: [
-						{
-							name: 'Machine On',
-							y: $scope.totalOKTime,
-						},
-						{
-							name: 'Unplanned',
-							y: $scope.unplannedDowntime,
-						},
-						{
-							name: 'Planned',
-							y: $scope.plannedDowntime,
-						}
-					]
-	            });
-
-	            $scope.chart3.addSeries({
-	            	name: 'Rejection',
-					colorByPoint: true,
-					data: [
-						{
-							name: 'Bolting',
-							y: $scope.boltReject,
-						},
-						{
-							name: 'Performance',
-							y: $scope.perfReject,
-						},
-						{
-							name: 'Leak',
-							y: $scope.leakReject,
-						}
-					]
-	            });
-
-	            $scope.append = '%';
-	            $scope.label = 'Normal';
-	            $scope.color = $scope.labelColor = $scope.valueColor = 'black';
-	            $scope.foreColor1 = '#e74c3c';
-	            $scope.foreColor2 = 'yellow';
-	            $scope.foreColor3 = '#2ecc71';
-	            $scope.foreColor4 = '#2980b9';
-	            $scope.backColor = '#ecf0f1';
-	            $scope.chart1.hideLoading();
-	            $scope.chart2.hideLoading();
-	            $scope.chart3.hideLoading();
-	            $scope.chart1.setTitle({ style: {'color': 'black'} });
-				$scope.chart2.setTitle({ style: {'color': 'black'} });
-				$scope.chart3.setTitle({ style: {'color': 'black'} });
-	            $scope.chart1.chartBackground.attr({ fill : 'white'});
-				$scope.chart2.chartBackground.attr({ fill : 'white'});
-				$scope.chart3.chartBackground.attr({ fill : 'white'});
-	            $scope.pageLoading = false;
-			});
-		};
-
-		$scope.periodChanged = function (oldval) {
-			
-			if ($scope.filt.duration === '1') {
-				
-				if ($scope.filt.period === '3') {
-					$scope.showDateShift(oldval);
-				} else if ($scope.filt.period === '4') {
-					var zz = $filter('filter')($scope.periods, {id: 4})[0];
-					$scope.custom = zz.custom;
-					$scope.dateShiftQuery();
-				} else {
-					$scope.dateShiftQuery();
-				};
-				
-			} else if ($scope.filt.duration === 2) {
-				// something for the day duration here
-			};
-		};
-
-		$scope.shiftChartOptions = {
+        $scope.shiftChartOptions = {
 			chart: {
-				renderTo: 'container',
+				renderTo: 'container1',
 				zoomType: 'x',
 				panning: true,
 				panKey: 'shift'
@@ -348,9 +158,68 @@ angular.module('fractalApp')
             ]
 		};
 
-		$scope.pieChartOptions = {
+		$scope.prodrateChartOptions = {
 			chart: {
 				renderTo: 'container2',
+			},
+			loading: {
+				labelStyle: {
+					color: '#9FA8DA',
+				},
+				style: {
+					backgroundColor: '#EEEEEE'
+				}
+			},
+			credits: {
+				enabled: false
+			},
+			title: {
+		        text: 'Production Rate'
+		    },
+		    xAxis: {
+				type: 'datetime'
+			},
+		    yAxis: {
+		        title: {
+		            text: 'Part Count'
+		        }
+		    },
+		    legend: {
+		    	enabled: false,
+		        layout: 'horizontal',
+		        padding: 0,
+		    },
+            plotOptions: {
+                area: {
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [
+	            // {
+	            //     name: 'Nominal',
+	            //     data: $scope.ondata,
+	            //     color: '#8BC34A'
+	            // },
+	            {
+	                name: 'Actual',
+	                data: $scope.prodRateLine,
+	                color: '#EF5350'
+	            },
+            ]
+		};
+
+		$scope.pieChartOptions = {
+			chart: {
+				renderTo: 'container3',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false,
@@ -387,26 +256,13 @@ angular.module('fractalApp')
 			series: [{
 				name: 'Time',
 				colorByPoint: true,
-				data: [
-					{
-						name: 'Machine On Time',
-						y: $scope.totalOKTime,
-					},
-					{
-						name: 'Unplanned',
-						y: $scope.unplannedDowntime,
-					},
-					{
-						name: 'Planned',
-						y: $scope.plannedDowntime,
-					}
-				]
+				data: $scope.piedata,
 			}]
 		};
 
 		$scope.rejectChartOptions = {
 			chart: {
-				renderTo: 'container3',
+				renderTo: 'container4',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false,
@@ -443,51 +299,28 @@ angular.module('fractalApp')
 			series: [{
 				name: 'Rejection',
 				colorByPoint: true,
-				data: [
-					{
-						name: 'Bolting',
-						y: $scope.boltReject,
-					},
-					{
-						name: 'Performance',
-						y: $scope.perfReject,
-					},
-					{
-						name: 'Leak',
-						y: $scope.leakReject,
-					}
-				]
+				data: $scope.rejectdata,
 			}]
 		};
 
-		$scope.drawChart1 = function () {
+		$timeout(function() {
 			$scope.chart1 = new Highcharts.Chart($scope.shiftChartOptions);
-		};
-
-		$scope.drawChart1();
-		$timeout(function() {
-			$scope.chart2 = new Highcharts.Chart($scope.pieChartOptions);
 		}, 500);
 		$timeout(function() {
-			$scope.chart3 = new Highcharts.Chart($scope.rejectChartOptions);
+			$scope.chart2 = new Highcharts.Chart($scope.prodrateChartOptions);
+		}, 500);
+		$timeout(function() {
+			$scope.chart3 = new Highcharts.Chart($scope.pieChartOptions);
+		}, 500);
+		$timeout(function() {
+			$scope.chart4 = new Highcharts.Chart($scope.rejectChartOptions);
 		}, 500);
 
-}]);
-
-
-angular.module('fractalApp')
-	.controller('DialogController', ['$scope', '$mdDialog', 'shiftSelect',
-		function ($scope, $mdDialog, shiftSelect) {
-
-		$scope.shiftSelect = shiftSelect===0 ? true : false;
-		$scope.custom = shiftSelect===0 ? {'date': new Date(), 'shift': 1+''} : {'date': new Date()};
-		
-		$scope.cancel = function () {
-			$mdDialog.cancel();
-		};
-
-		$scope.ok = function () {
-			$mdDialog.hide($scope.custom);
-		}
+        // $scope.$watch(
+        //     function() { return $mdSidenav('yourSide').isOpen(); },
+        //     function(newValue, oldValue) {
+        //         console.log(newValue);
+        //     }
+        // );
 
 }]);

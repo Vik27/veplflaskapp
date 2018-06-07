@@ -8,7 +8,7 @@ import sys, os, re
 from stat import S_ISREG, ST_CTIME, ST_MODE
 import time
 import smtplib
-from app.models import cyclelog, aliverow, cyclelognew, cyclelognew2
+# from app.models import cyclelog, aliverow, cyclelognew, cyclelognew2
 from sqlalchemy import func
 # from email.mime.text import MIMEText
 

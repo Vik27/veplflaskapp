@@ -1,7 +1,7 @@
 // Declare app level module which depends on filters, and services
 angular.module('fractalApp', 
   ['ngResource', 'ngRoute', 'ui.bootstrap', 'ngCookies',
-  'ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'angularjs-gauge', 'treeGrid'])
+  'ngMaterial', 'ngMessages', 'material.svgAssetsCache', 'angularjs-gauge', 'treeGrid', 'ngMdIcons'])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
     $routeProvider
@@ -181,5 +181,23 @@ angular.module('fractalApp')
       };
 
 }]);
+
+
+angular.module('fractalApp').config(function($mdThemingProvider) {
+  // var customBlueMap =     $mdThemingProvider.extendPalette('light-blue', {
+  //   'contrastDefaultColor': 'light',
+  //   'contrastDarkColors': ['50'],
+  //   '50': 'ffffff'
+  // });
+  // $mdThemingProvider.definePalette('customBlue', customBlueMap);
+  // $mdThemingProvider.theme('default')
+  //   .primaryPalette('customBlue', {
+  //     'default': '500',
+  //     'hue-1': '50'
+  //   })
+  //   .accentPalette('pink');
+  $mdThemingProvider.theme('input', 'default')
+        .primaryPalette('green')
+});
 
 

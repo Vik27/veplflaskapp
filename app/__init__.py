@@ -89,7 +89,14 @@ from app.models import shopshifthistory1
 from app.models import shopweekhistory1
 
 
+from app.routes import index
+from app.routes import authentication
+from app.routes import users
+from app.routes import create_admin_entries
 from app.routes import localcommunications
+# from app.routes import floorviews
+from app.routes import machinepages1
+from app.routes import plantwisepages
 
 from app.functionss import access
 

@@ -1,6 +1,65 @@
-<tree-grid tree-data="tree_data" tree-control="my_tree" on-click="my_tree_handler(branch)" expand-on="expanding_property" expand-to="expLevel" col-defs="col_defs"></tree-grid>
 
-<button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
-<button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
-<input class="input-sm pull-right" type="text" data-ng-model="filterString"	placeholder="Filter" />
-<!-- <tree-grid tree-data="tree_data" tree-control="my_tree" col-defs="col_defs" expand-on="expanding_property" on-select="my_tree_handler(branch)" expand-level="2" icon-leaf= "glyphicon glyphicon-globe"></tree-grid> -->
+<script type="text/ng-template" id="bottom-sheet-list-template.html">
+	<md-bottom-sheet class="md-list md-has-header">
+		<md-list ng-cloak>
+			<md-subheader class="md-no-sticky">Select Timeframe</md-subheader>
+			<md-list-item ng-repeat="item in items">
+				<p> {{ item.name }} </p>
+				<md-checkbox class="md-secondary" ng-model="item.checked" ng-change="handleTimeframeChange($index)"></md-checkbox>
+			</md-list-item>
+		</md-list>
+	</md-bottom-sheet>
+</script>
+
+<div style="height:{{hght}};" ng-cloak="" layout="column" class="relative" layout-fill flex="">
+
+	<style>
+		ng-md-icon {
+			/*position: relative;*/
+			top: 5px; // adjust for svg viewbox
+		}
+		ng-md-icon svg {
+			fill: white;
+		}
+	</style> 
+
+	<md-toolbar style="z-index: 200" class="md-whiteframe-3dp">
+		<div class="md-toolbar-tools">
+			<h3>
+				<span>Assets</span>
+			</h3>
+			<span flex=""></span>
+			<md-input-container style="margin-top: 40px" md-no-float class="md-block">
+				<md-icon md-colors="{color: 'default-background-300'}" ng-show="!filterString" class="material-icons">search</md-icon>
+				<input md-colors="{color: 'default-background-300'}" ng-model="filterString" placeholder="Search" md-autofocus>
+				<md-icon md-colors="{color: 'default-background-300'}" ng-show="filterString" class="material-icons" ng-click="filterString=''">close</md-icon>
+			</md-input-container>
+			<md-button class="md-icon-button" aria-label="Open Settings" ng-click="showListBottomSheet($event)">
+				<md-icon md-colors="{color: 'default-background-300'}" class="material-icons">more_vert</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+
+	<md-content flex="" layout-fill>
+		<md-card>
+			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+			<md-card-title>
+				<md-card-title-text>
+					<span class="md-headline">{{selectedTimeframe.name}} Status</span>
+					<!-- <span class="md-subhead">Extra Large</span> -->
+				</md-card-title-text>
+			</md-card-title>
+			<md-card-content>
+				<div flex layout="column">
+					<div layout="row" layout-align="end center">
+						<button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
+						<button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
+					</div>
+					<tree-grid tree-data="tree_data" tree-control="my_tree" on-click="my_tree_handler(branch)" expand-on="expanding_property" expand-to="expLevel" col-defs="col_defs" icon-leaf="fa fa-wrench" icon-collapse="fas fa-toolbox" icon-expand="fa fa-industry"></tree-grid>
+				</div>
+			</md-card-content>
+		</md-card>
+	</md-content>
+</div>
+
+
