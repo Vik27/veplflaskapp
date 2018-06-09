@@ -27,33 +27,40 @@ angular.module('fractalApp')
         $scope.backColor = '#ecf0f1';
 
 		console.log(resolvedAjaxItems);
-		var resolvedAjaxItems = [{"id": 1, "value": [[1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1], [1528324597000, 0], [1528324597000, 1]], "name": "ondata"}, {"id": 2, "value": [[1528299000000, 0], [1528299000000, 1], [1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1]], "name": "offdata"}, {"id": 3, "value": [[1528299000000, 0], [1528299261000, 0], [1528304353000, 228], [1528306515000, 228], [1528308037000, 309], [1528309215000, 309], [1528316941000, 774], [1528319086000, 774], [1528321832000, 1014], [1528322931000, 1014], [1528322931000, 1014]], "name": "prodRateLine"}, {"id": 4, "value": 0.6211225589515885, "name": "oee"}, {"id": 5, "value": 0.8083880243134887, "name": "availability"}, {"id": 6, "value": 0.8407372168042143, "name": "performance"}, {"id": 7, "value": 0.92581854043392504, "name": "quality"}, {"id": 8, "value": [[9, "Shift Change", 260.823], [0, "Unknown", 4682.823]], "name": "downtimebreakup"}, {"id": 9, "value": [[9, "Pressing Load Fail", 26], [0, "Unknown", 8]], "name": "rejectionbreakup"}]
-		$scope.ondata = $filter('filter')(resolvedAjaxItems, {'id': 1})[0].value;
-		$scope.offdata = $filter('filter')(resolvedAjaxItems, {'id': 2})[0].value;
-		$scope.prodRateLine = $filter('filter')(resolvedAjaxItems, {'id': 3})[0].value;
+		var reslved = resolvedAjaxItems.data;
+		// var resolvedAjaxItems = [{"id": 1, "value": [[1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1], [1528324597000, 0], [1528324597000, 1]], "name": "ondata"}, {"id": 2, "value": [[1528299000000, 0], [1528299000000, 1], [1528299261000, 0], [1528299261000, 1], [1528304353000, 0], [1528304353000, 1], [1528306515000, 0], [1528306515000, 1], [1528308037000, 0], [1528308037000, 1], [1528309215000, 0], [1528309215000, 1], [1528316941000, 0], [1528316941000, 1], [1528319086000, 0], [1528319086000, 1], [1528321832000, 0], [1528321832000, 1], [1528322931000, 0], [1528322931000, 1]], "name": "offdata"}, {"id": 3, "value": [[1528299000000, 0], [1528299261000, 0], [1528304353000, 228], [1528306515000, 228], [1528308037000, 309], [1528309215000, 309], [1528316941000, 774], [1528319086000, 774], [1528321832000, 1014], [1528322931000, 1014], [1528322931000, 1014]], "name": "prodRateLine"}, {"id": 4, "value": 0.6211225589515885, "name": "oee"}, {"id": 5, "value": 0.8083880243134887, "name": "availability"}, {"id": 6, "value": 0.8407372168042143, "name": "performance"}, {"id": 7, "value": 0.92581854043392504, "name": "quality"}, {"id": 8, "value": [[9, "Shift Change", 260.823], [0, "Unknown", 4682.823]], "name": "downtimebreakup"}, {"id": 9, "value": [[9, "Pressing Load Fail", 26], [0, "Unknown", 8]], "name": "rejectionbreakup"}]
+		$scope.ondata = $filter('filter')(reslved, {'id': 1})[0].value;
+		$scope.offdata = $filter('filter')(reslved, {'id': 2})[0].value;
+		$scope.prodRateLine = $filter('filter')(reslved, {'id': 3})[0].value;
 		$scope.totalCount = $scope.prodRateLine[$scope.prodRateLine.length-1][1];
-		$scope.oee = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 4})[0].value*100, 1);
-		$scope.availability = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 5})[0].value*100, 1);
-		$scope.performance = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 6})[0].value*100, 1);
-		$scope.quality = $filter('number')($filter('filter')(resolvedAjaxItems, {'id': 7})[0].value*100, 1);
+		$scope.oee = $filter('number')($filter('filter')(reslved, {'id': 4})[0].value*100, 1);
+		$scope.availability = $filter('number')($filter('filter')(reslved, {'id': 5})[0].value*100, 1);
+		$scope.performance = $filter('number')($filter('filter')(reslved, {'id': 6})[0].value*100, 1);
+		$scope.quality = $filter('number')($filter('filter')(reslved, {'id': 7})[0].value*100, 1);
 		$scope.okcount = $filter('number')($scope.totalCount*$scope.quality/100, 0);
-		$scope.downtimebreakup = $filter('filter')(resolvedAjaxItems, {'id': 8})[0].value;
+		$scope.downtimebreakup = $filter('filter')(reslved, {'id': 8})[0].value;
 		var downtime = 0;
 		$scope.piedata = [];
 		angular.forEach($scope.downtimebreakup, function (value, key) {
 			$scope.piedata.push({name: value[1], y: value[2]});
-			downtime = downtime + value[2];
+			downtime = downtime + (value[2]/60);
 		});
 		$scope.downtime = $filter('number')(downtime, 0)
-		$scope.rejectionbreakup = $filter('filter')(resolvedAjaxItems, {'id': 9})[0].value;
+		$scope.rejectionbreakup = $filter('filter')(reslved, {'id': 9})[0].value;
 		$scope.rejectdata = [];
 		angular.forEach($scope.rejectionbreakup, function (value, key) {
 			$scope.rejectdata.push({name: value[1], y: value[2]});
 		});
 
-		$scope.machineId = 1;
+		$scope.machineId = resolvedAjaxItems.machineId;
 		$scope.date = new Date();
-		$scope.shift = 'B';
+		if (resolvedAjaxItems.shift === 1) {
+			$scope.shift= 'A';
+		} else if (resolvedAjaxItems.shift === 2) {
+			$scope.shift = 'B';
+		} else {
+			$scope.shift = 'C';
+		};
 
 		$scope.toggleSidenav = function(menuId) {
 			$mdSidenav(menuId).toggle();
@@ -161,6 +168,7 @@ angular.module('fractalApp')
 		$scope.prodrateChartOptions = {
 			chart: {
 				renderTo: 'container2',
+				type: 'line'
 			},
 			loading: {
 				labelStyle: {
@@ -174,15 +182,18 @@ angular.module('fractalApp')
 				enabled: false
 			},
 			title: {
-		        text: 'Production Rate'
+		        text: 'Production Rate - Part Count vs Time'
 		    },
 		    xAxis: {
 				type: 'datetime'
 			},
 		    yAxis: {
 		        title: {
-		            text: 'Part Count'
-		        }
+		            text: ''
+		        },
+				labels: {
+					enabled: false
+				},
 		    },
 		    legend: {
 		    	enabled: false,
@@ -190,18 +201,29 @@ angular.module('fractalApp')
 		        padding: 0,
 		    },
             plotOptions: {
-                area: {
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
+				line: {
+					dataLabels: {
+						enabled: true,
+						allowOverlap: true,
+						padding: 15,
+						align: 'right',
+						rotation: 300,
+						verticalAlign: 'top',
+						x: 10,
+						y: -30,
+						crop: false,
+						overflow: 'none'
+					},
+					marker: {
+						enabled: true
+					}
+					// enableMouseTracking: false
+				},
+				series: {
+					label: {
+						enabled: false,
+					}
+				},
             },
             series: [
 	            // {
@@ -210,7 +232,7 @@ angular.module('fractalApp')
 	            //     color: '#8BC34A'
 	            // },
 	            {
-	                name: 'Actual',
+	                name: 'Part Count',
 	                data: $scope.prodRateLine,
 	                color: '#EF5350'
 	            },

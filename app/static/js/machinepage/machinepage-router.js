@@ -22,9 +22,9 @@ angular.module('fractalApp')
                   $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
                   var fil = {'duration': '1', 'period': '1'};
                   var cust = {};
-                  // machinepager.get({id: $route.current.params.id, filt: fil, custom: cust}, function(data) {
+                  machinepager.get({id: $route.current.params.id}, function(data) {
                     deferred.resolve(data);
-                  // });
+                  });
                 }
               }
             )

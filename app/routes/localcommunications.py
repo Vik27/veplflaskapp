@@ -27,9 +27,14 @@ class Aliverowx(object):
 @app.route('/fractal/mcmsgsnew', methods=['POST'])
 def mcmsgsnew():
 	j = request.json
+	if j['mcid']==1:
+                entt=machinecurrentshift1.Machinecurrentshift1.query.get(1)
+                entt.value=json.dumps(j['data'])
+                db.session.merge(entt)
+                db.session.commit()
 	if j['mcid']==2:
 		entt=machinecurrentshift2.Machinecurrentshift2.query.get(1)
-		entt.value=j['data']
+		entt.value=json.dumps(j['data'])
 		db.session.merge(entt)
 		db.session.commit()
 
