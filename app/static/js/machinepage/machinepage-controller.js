@@ -39,6 +39,23 @@ angular.module('fractalApp')
 		$scope.quality = $filter('number')($filter('filter')(reslved, {'id': 7})[0].value*100, 1);
 		$scope.okcount = $filter('number')($scope.totalCount*$scope.quality/100, 0);
 		$scope.downtimebreakup = $filter('filter')(reslved, {'id': 8})[0].value;
+		$scope.dtplotlines = $filter('filter')(reslved, {'id': 12})[0].value;
+		$scope.dtplotlinedata = [];
+		angular.forEach($scope.dtplotlines, function (value, key) {
+			$scope.dtplotlinedata.push(
+					{
+					    value: value[0], // Value of where the line will appear
+					    width: 0, // Width of the line
+					    label: { 
+						    text: value[1], // Content of the label. 
+						    align: 'left', // Positioning of the label. 
+						  },
+						zIndex: 10,  
+					}
+
+				);
+		});
+		console.log($scope.dtplotlinedata)
 		var downtime = 0;
 		$scope.piedata = [];
 		angular.forEach($scope.downtimebreakup, function (value, key) {
@@ -98,7 +115,8 @@ angular.module('fractalApp')
 				renderTo: 'container1',
 				zoomType: 'x',
 				panning: true,
-				panKey: 'shift'
+				panKey: 'shift',
+				alignTicks: false
 			},
 			loading: {
 				labelStyle: {
@@ -116,20 +134,32 @@ angular.module('fractalApp')
 				style: {'font-family': 'Roboto'}
 			},
 			xAxis: {
-				type: 'datetime'
+				type: 'datetime',
+				plotLines: $scope.dtplotlinedata
 			},
-			yAxis: {
-				title: {
-					text: ''
-				},
-				labels: {
-					enabled: false
-				},
-				min: 0,
-				max: 1,
-				gridLineWidth: 0,
-				minorGridLineWidth: 0
-			},
+			yAxis: 
+			[
+				{ // Primary yAxis
+					min:0,
+					max:1,
+					labels: {
+			            enabled: false,
+			            format:''
+			        }
+			        
+
+			    },
+
+			    { // Secondary yAxis
+			        opposite: true,
+			        max:1400,
+			        labels: {
+			            enabled: false,
+			            format:''
+			        }
+			    },
+				
+			],
             legend: {
                 enabled: false
             },
@@ -145,24 +175,59 @@ angular.module('fractalApp')
                         }
                     },
                     threshold: null
-                }
+                },
+                line: {
+					dataLabels: {
+						enabled: true,
+						allowOverlap: true,
+						padding: 15,
+						align: 'right',
+						rotation: 300,
+						verticalAlign: 'top',
+						x: 10,
+						y: -30,
+						crop: false,
+						overflow: 'none'
+					},
+					marker: {
+						enabled: true
+					}
+					// enableMouseTracking: false
+				},
+				series: {
+					label: {
+						enabled: false,
+					}
+				},
             },
+
             series: [
 	            {
 	                type: 'area',
 	                name: 'ON',
 	                data: $scope.ondata,
 	                fillColor: '#8BC34A',
-	                color: '#8BC34A'
+	                color: '#8BC34A',
+	                
 	            },
 	            {
 	                type: 'area',
 	                name: 'OFF',
 	                data: $scope.offdata,
 	                fillColor: '#EF5350',
-	                color: '#EF5350'
+	                color: '#EF5350',
+	                
 	            },
-            ]
+	            {
+	                type: 'line',
+	                data: $scope.prodRateLine,
+	                color: 'blue',
+	               	yAxis:1,
+
+
+	            },
+            ],
+            
 		};
 
 		$scope.prodrateChartOptions = {
