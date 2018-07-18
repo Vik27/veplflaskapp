@@ -31,6 +31,7 @@ angular.module('fractalApp')
         
         $scope.my_tree_handler = function (branch) {
             console.log('you clicked on', branch);
+	    $location.path(branch.Link);
         };
 
         var aa = {
@@ -65,21 +66,21 @@ angular.module('fractalApp')
                                 children:[
                                     {
                                         Name:"2WSM-Auto",
-                                        Colr:"#ff9900",
-                                        Link:true,
-                                        Efficiency:46,
-                                        Availability:68,
-                                        Quality:87,
-                                        Performance:78,
+                                        Colr:"green",
+                                        Link:'/machine/1',
+                                        Efficiency:85,
+                                        Availability:95,
+                                        Quality:90,
+                                        Performance:98,
                                     },
                                     {
                                         Name:"Core Pressing",
-                                        Colr:"green",
-                                        Link:true,
-                                        Efficiency:67,
-                                        Availability:87,
-                                        Quality:92,
-                                        Performance:84,
+                                        Colr:"#ff9900",
+                                        Link:'/machine/2',
+                                        Efficiency:44,
+                                        Availability:89,
+                                        Quality:87,
+                                        Performance:57,
                                     }
                                 ]
                             },

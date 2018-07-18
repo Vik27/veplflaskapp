@@ -12,12 +12,13 @@ class Machinecurrentshift1(db.Model):
 
         sync = db.Column(db.Integer)
 
-
+	timestamp = db.Column(db.DateTime)
         def to_dict(self):
                 return dict(
                         graphtypeid = self.graphtypyeid,
                         value = self.value,
                         sync = self.sync,
+			timestamp = self.timestamp,
                         id = self.id
                 )
 

@@ -105,7 +105,7 @@
 		<md-toolbar style="position: fixed; top: 50px">
 			<div class="md-toolbar-tools" layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="center start">
 				<div flex-gt-xs="40" layout="row" layout-align="start center">
-					<md-button ng-click="toggleSidenav('left')" ng-disabled="true">
+					<md-button ng-click="toggleSidenav('left')" ng-disabled="false">
 						<md-icon class="material-icons">
 							edit
 						</md-icon>
@@ -125,12 +125,7 @@
 		</md-toolbar>
 		<md-card style="margin-top: 80px">
 			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-			<div flex id="container1" style="height:230px;">
-			</div>
-		</md-card>
-		<md-card>
-			<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-			<div flex id="container2" style="height:230px;">
+			<div flex id="container1" style="height:280px;">
 			</div>
 		</md-card>
 		<div layout-xs="column" layout="row">
@@ -143,6 +138,15 @@
 							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
+					<md-divider></md-divider>
+					<md-card-content ng-class="pageLoading ? 'alert-disabled' : 'alert-info'">
+						<div ng-if="!pageLoading" flex layout="row" layout-xs="column">
+							<p ng-repeat="log in okngstatlog" flex-gt-xs="50" flex-xs class="md-subhead" style="color: black"> {{ ::log.partname }}: {{ ::log.okcount + log.ngcount }} </p>
+						</div>
+						<div ng-if="pageLoading">
+							<p> Loading... </p>
+						</div>
+					</md-card-content>
 				</md-card>
 			</div>
 			<div flex-xs flex-gt-xs="30">
@@ -154,6 +158,15 @@
 							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
+					<md-divider></md-divider>
+					<md-card-content ng-class="pageLoading ? 'alert-disabled' : 'alert-success'">
+						<div ng-if="!pageLoading" flex layout="row" layout-xs="column">
+							<p ng-repeat="log in okngstatlog" flex-gt-xs="50" flex-xs class="md-subhead" style="color: black"> {{ ::log.partname }}: {{ ::log.okcount }} </p>
+						</div>
+						<div ng-if="pageLoading">
+							<p> Loading... </p>
+						</div>
+					</md-card-content>
 				</md-card>
 			</div>
 			<div flex-xs flex-gt-xs="40">
@@ -165,6 +178,16 @@
 							<span class="md-body-2" ng-if="pageLoading">Loading...</span>
 						</md-card-title-text>
 					</md-card-title>
+					<md-divider></md-divider>
+					<md-card-content ng-class="pageLoading ? 'alert-disabled' : 'alert-danger'">
+						<div ng-if="!pageLoading" flex layout="row" layout-xs="column">
+							<p flex-gt-xs="50" flex-xs class="md-subhead" style="color: black"> Operator: {{ ::operator }} </p>
+							<p flex-gt-xs="50" ng-if="filt.period!=='1'" flex-xs class="md-subhead" style="color: black; text-align: right"> Supervisor: {{ ::supervisor }} </p>
+						</div>
+						<div ng-if="pageLoading">
+							<p> Loading... </p>
+						</div>
+					</md-card-content>
 				</md-card>
 			</div>
 		</div>
@@ -226,13 +249,80 @@
 			<div flex-xs="" flex-gt-xs="50">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-					<div id="container3" style="height:300px;"></div>
+					<div id="container2" style="height:300px;"></div>
 				</md-card>
 			</div>
 			<div flex-xs="" flex-gt-xs="50" ng-hide="totalReject===0">
 				<md-card>
 					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
-					<div id="container4" style="height:300px;"></div>
+					<div id="container3" style="height:300px;"></div>
+				</md-card>
+			</div>
+		</div>
+		<div layout-xs="column" layout-gt-xs="row">
+			<div flex-xs="" flex-gt-xs="50" layout="column">
+				<md-card>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
+						<md-card-title-text>
+							<span class="md-headline" style="color: {{color}}">FPA Logs</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<table class="table">
+							<thead>
+								<tr>
+									<th> # </th>
+									<th> Operator </th>
+									<th> Timestamp </th>
+									<th ng-repeat="fpa in fpas"> {{fpa.name}} </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="log in fpalogs">
+									<td> {{ $index+1 }} </td>
+									<td> {{ log.operatorid }} </td>
+									<td> {{ log.timestamp | date: 'shortTime' }} </td>
+									<td ng-repeat="val in log.values">
+										{{ val.value }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</md-card-content>
+				</md-card>
+			</div>
+			<div flex-xs="" flex-gt-xs="50" layout="column">
+				<md-card>
+					<md-progress-linear ng-show="pageLoading" md-mode="query"></md-progress-linear>
+					<md-card-title ng-class="pageLoading ? 'alert-disabled' : ''">
+						<md-card-title-text>
+							<span class="md-headline" style="color: {{color}}">Poka-Yoke Logs</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content layout="row" layout-align="center center" ng-class="pageLoading ? 'alert-disabled' : ''">
+						<table class="table">
+							<thead>
+								<tr>
+									<th> # </th>
+									<th> Operator </th>
+									<th> Timestamp </th>
+									<th ng-repeat="pkyk in pkyks"> {{pkyk.name}} </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="log in pklogs">
+									<td> {{ $index+1 }} </td>
+									<td> {{ log.operatorid }} </td>
+									<td> {{ log.timestamp | date: 'shortTime' }} </td>
+									<td ng-repeat="val in log.values">
+										<i ng-if="val.value" class="fa fa-check"></i>&nbsp; 
+										<i ng-if="!val.value" class="fa fa-times"></i>&nbsp; 
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</md-card-content>
 				</md-card>
 			</div>
 		</div>

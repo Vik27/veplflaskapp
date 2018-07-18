@@ -23,12 +23,14 @@
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/series-label.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/data.js"></script>
+	<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 
 </head>
 
 <body>
 	<div class="row" ng-controller="MasterCtrl">
-			<nav class="navbar navbar-fixed-top navbar-inverse" style="margin-bottom:0px;border-radius:0;background-color:#1a1a1a">
+			<nav class="navbar navbar-fixed-top navbar-inverse" style="margin-bottom:0px;border-radius:0;">
 				<div class="container-fluid">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header">
@@ -38,18 +40,18 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#/" style="padding-top:0;padding-left:40px">
-							<img src="/static/images/noviga_brand_logo.png" alt="noviga-logo" width="160" height="50">
+						<a class="navbar-brand" href="#/" style="padding-top:0;">
+							<img src="/static/images/varrocLogo.png" alt="noviga-logo" width="160" height="50">
 						</a>
 					</div>
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li ng-class="{'active': selectedLabel === 'Dashboard' || selectedLabel === undefined}" ng-click="selectedLabel = 'Dashboard'">
-								<a href="#/">Dashboard</a>
+							<li ng-class="{'active': selectedLabel === 'Dashboard'}" ng-click="selectedLabel = 'Dashboard'">
+								<a href="#/home">Dashboard</a>
 							</li>
-							<li ng-class="{'active': selectedLabel === 'Plantwise'}" ng-click="selectedLabel = 'Plantwise'">
+							<li ng-class="{'active': selectedLabel === 'Plantwise' || selectedLabel === undefined}" ng-click="selectedLabel = 'Plantwise'">
 								<a href="#/plantwise">Plant-wise View</a>
 							</li>
 							<li class="disabled">

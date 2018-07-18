@@ -20,9 +20,9 @@ angular.module('fractalApp')
                   deferred.reject({authenticated: 'notLoggedIn'});                  
                 } else {
                   $rootScope.loggedInUser = {id:data.id, name: data.username, role: data.role, businessId: data.businessId};
-                  var fil = {'duration': '1', 'period': '1'};
+                  var filt = {'duration': '1', 'period': '1'};
                   var cust = {};
-                  machinepager.get({id: $route.current.params.id}, function(data) {
+                  machinepager.get({filt: filt, custom: cust, id: $route.current.params.id}, function(data) {
                     deferred.resolve(data);
                   });
                 }
