@@ -547,7 +547,7 @@ angular.module('fractalApp')
 				enabled: false
 			},
 			title: {
-				text: 'Availability Pie Chart',
+				text: 'Downtime Pie Chart',
 				style: {'font-family': 'Roboto'}
 			},
 			tooltip: {
